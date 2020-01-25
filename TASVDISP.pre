@@ -1,0 +1,38 @@
+/*****************************************************************************
+
+		Copyright (c) 1989 - 1998 De Lint Associates
+
+ Project:  TASVPI
+ FileName: TASVDISP.PRE
+ Purpose: Predicate definitions for TASVDISP.PRO
+ Written by: JdL
+ Comments:
+******************************************************************************/
+
+%BEGIN_DECL, System generated global predicates
+GLOBAL PREDICATES
+  win_display_window_Create(WINDOW Parent, string Onderdeel, integer WdNo, integer Mode) - (i, i, i, i)
+procedure  cleanSchemaWin(window) - (i)
+  dlg_onderdeel_select_Create(WINDOW Parent, string Titel, slist OnderdelenIn, integer Preselect, slist Selectie, vandom) - (i,i, i, i, o, o)
+  dlg_koppelingenoverzicht_Create(WINDOW Parent, catl) - (i, i)
+  tb_schemabar_Create(WINDOW Parent) - (i)
+  dlg_koppelingmodel_Create(WINDOW Parent, wedscat CatIn, string ERNaam, slist VoorrondeL, ilist Presel, integer) - (i,i,i,i,i,o)
+  tb_deelinbar_Create(WINDOW Parent) - (i)
+  win_onderdeel_Create(WINDOW Parent, string Onderdeel) - (i,i)
+%END_DECL
+  procedure close_schemas()
+  %select(wedscat) - (i)
+  procedure select(wedscat, integer) - (i,i)
+  procedure select(wedscat, integer, integer Mode, integer Vooraan, tgnst OpTgnst) - (i,i,i,i,i)
+  procedure update_display() 			% het huidige display
+  %update_display(wedscat) - (i)
+  %focus_display()
+%  current_afval(WINDOW, wedscat) - (o,o)
+  vanPoelAfval(rsoort, wedscat, vandom, tgnst, integer, string NogNietKlaar) - (i,i,i,o,o,o)
+  %vrij_opg(integer,wedscat) - (i,i)
+  nondeterm  my_kopl(WINDOW, wedscat, vandom, wedscat, ipvdom) - (i,i,o,i,o) (i,i,o,o,o) (i,i,o,o,plaats(o))
+  %eindrondes1(WINDOW) - (i) 
+procedure eindrondeVan(wedscat, wedscat) - (i, o)
+procedure setOndNaam(wedscat, string) - (i, i)
+procedure plaatsText(integer P, string Str) - (i, o)
+  koppelingEchtUitvoeren(window, wedscat CatIn, wedscat CatNo1, integer PosUit, tgnst, tgnst Overschrijven) - (i, i, i, i, i, i)

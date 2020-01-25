@@ -1,0 +1,13 @@
+/******************************************************************************
+
+		Copyright (c)2000 Prolog Development Center A/S
+
+ FileName:	Browser.pre
+ Purpose:	Browser tool template file
+ Written by:	Alexander Butovsky
+ Date:		25.08.2000
+ Tested with:	Visual Prolog 5.2 build 594
+ Comments:
+******************************************************************************/
+% Replace BROWSER_DIR with actual path to Browser tool:
+include "Tools\\Browser\\Browser.pre"

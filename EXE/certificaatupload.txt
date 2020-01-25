@@ -1,0 +1,6 @@
+
+wachtwoord PW#e^ny
+openssl pkcs12 -in certsin/1701071.pfx -out certspem/1701071.pem -passin pass:'PW#e^ny' -passout pass:wafux7machUnuf2R5Yufruchap88zEthAp 2>&1
+MAC verified OK
+
+Gelukt! MAC verified OK

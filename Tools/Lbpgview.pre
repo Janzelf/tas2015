@@ -1,0 +1,40 @@
+/******************************************************************************
+
+		Copyright (c)1996 Prolog Development Center A/S
+
+ Project:	Label Expert
+ FileName:	LBPGVIEW.PRE
+ Purpose:	Global predicates for page preview custom control
+ Written by:	Sergey Alexeev
+ Build:		007.970917
+ Comments:
+******************************************************************************/
+GLOBAL PREDICATES
+preview_Init(WINDOW PreviewWin,
+	     INTEGER FormPage,
+	     COLOR ColorPage,
+	     REAL LeftMarg,
+	     REAL TopMarg,
+	     REAL HorSpace,
+	     REAL VertSpace,
+	     REAL LabelWidth, 
+	     REAL LabelHeight,
+	     UNSIGNED NoHor,
+	     UNSIGNED NoVert,
+	     BOOLEAN Page_Roll,
+	     COLOR BgColor) - (i,i,i,i,i,i,i,i,i,i,i,i,i)
+
+preview_HandleEvent(WINDOW,EVENT) - (i,i)
+
+preview_set(WINDOW PreviewWin,
+	     INTEGER FormPage,
+	     COLOR ColorPage,
+	     REAL LeftMarg,
+	     REAL TopMarg,
+	     REAL HorSpace,
+	     REAL VertSpace,
+	     REAL LabelWidth, 
+	     REAL LabelHeight,
+	     UNSIGNED NoHor,
+	     UNSIGNED NoVert,
+	     BOOLEAN Page_Roll) - (i,i,i,i,i,i,i,i,i,i,i,i)

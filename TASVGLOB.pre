@@ -1,0 +1,272 @@
+/*****************************************************************************
+
+		Copyright (c) 1989 - 1998 De Lint Associates
+
+ Project:  TASVPI
+ FileName: TASVGLOB.PRE
+ Purpose: Predicate definitions for TASVGLOB.PRO
+ Written by: JdL
+ Comments:
+******************************************************************************/
+
+GLOBAL PREDICATES
+
+%procedure maak11proef(string, string) - (i, o)
+procedure proef11(string) - (i)
+determ    proef11det(string) - (i)
+determ    proef11a(string Rev, integer Pos, integer TussenSom) - (i, i, i)
+determ    emailproef(string Adres) - (i)	% Als blanco OK
+determ emailadresFout(string Adres) - (i)
+nondeterm geplaatsteOpgave(wedscat, string, integer) - (i,o, o)
+
+procedure   /* vertaal dag,uur,kwartier naar het interne tijd       */
+	    /*  2     bits kwartier                       formaat   */
+	    /*  5     bits uren                                     */
+	    /*  rest  bits dagen                                    */
+   tijd_kwart(integer,integer,integer,tijd) - (i,i,i,o)(o,o,o,i) language c
+
+procedure  tijd_str(tijd,string,string DagNr) - (i,o,o)
+
+nondeterm  periode_member(period,verhl) - (o, i)
+
+            /* afhankelijk van de eerste parameter:                  */
+	    /* 1 : uren                                              */
+	    /* 0 : minuten                                           */
+	    /* als het getal (max 2 digits) kleiner dan 10 is        */
+procedure   helestr_int(integer,string,integer) - (i,o,i) language c as "_helestr_int_0"
+
+determ      % naam van tegenstander
+   %rep(janee,janee,integer,integer,integer,integer,wedscat,tgnst,string,string Score, tijd Changed) - (i,i,i,i,i,i,i,i,o,o,o)
+   repc(janee Omdraaien, char Haakje, janee Baan, janee Afz,janee,integer,integer,integer,integer,wedscat,tgnst,ulong PlanTmTijd,string,string Score, tijd Changed, string Naam1, string Naam2, integer Nr1, integer Nr2) - (i,i,i,i,i,i,i,i,i,i,i,i,o,o,o,o,o,o,o)
+   repb(janee Omdraaien, char Haakje, janee Baan, janee Afz,janee,integer,integer,integer,integer,wedscat,tgnst,ulong PlanTmTijd,string,string Score, tijd Changed, BOOLEAN AlleenVoorl,string Anker) - (i,i,i,i,i,i,i,i,i,i,i,i,o,o,o,i,o)
+   repa(janee Omdraaien, char Haakje, janee Baan, janee Afz,janee,integer,integer,integer,integer,wedscat,tgnst,ulong PlanTmTijd,string,string Score, tijd Changed, BOOLEAN AlleenVoorl, BOOLEAN MaxLen, string Club, string Anker, string Naam1, string Naam2, integer Nr1, integer Nr2, string Noti) - (i,i,i,i,i,i,i,i,i,i,i,i,o,o,o,i,i,o,o,o,o,o,o,o)
+procedure naamscan(janee, BOOLEAN Voorletter, string, string, string Voornaam, string Landcode) - (i,i,i,o,o,o)	% naam omdraaien..
+
+determ      /* de dimensie van een wedstrijdnummer is het aantal    */
+	    /* kolommen voor de finale                              */
+   dim(integer,integer) - (i,o)
+
+determ      /* de cardinaliteit is het laagste wedstrijdnummer in   */
+	    /* dezelfde ronde als die van de bepaalde wedstrijd     */ 
+   card(integer,integer) - (i,o)
+   
+determ      /* de echte naam van de ronde, zie ronde domain         */
+   ronde(integer,integer,ronde_dom) - (i,i,o) 
+   /*      top    card   ronde                                      */
+
+determ  time_stamp1(tijd DagPlusTijd, ulong Dag, tijd Hoelaat) - (o, o, o) language c
+determ  time_stamp_next(tijd, integer, tijd) - (o,o,o) % idem maar eerstvolgende baantijd
+  dagIndex(integer, slist, integer Nul, integer) - (i,i,i,o)
+  huidig(integer Dag, tijd Tijd) - (o, o)
+  huidigetijdG(integer) - (o)  % niet gesynchroniseerd
+
+
+determ  wd_planned(integer,wl,tijd,BOOLEAN Vervolgplanning) - (i,o,i,i)
+nondeterm  wd_planned1X(wedid,integer,tijd) - (o,i,i)
+procedure bijWinst(BOOLEAN, string, string Short) - (i, o, o)
+nondeterm  /* wedstrijd# categorie spelernummer linksrechts anderetgnst */
+  wedstrijd(integer,wedscat,integer,integer,tgnst Zelf,tgnst Andere) - (o,o,i,o,o,o) (o,i,i,o,o,o) % (i,i,i,o)  (i,i,o,o)
+
+nondeterm  bn_for_c(tijd,integer) - (o, o) language stdcall
+		%as "bn_for_c_0"
+nondeterm  sp_for_c(persno,sex,string,string,verhl,offset,janee,tijd) -
+	   (o, o, o, o, o, o, o, o) language stdcall 
+determ  sp_for_c_tel(persno,sex,string,string,string, string,verhl,offset,janee,tijd,integer Leeftijd) -
+	   (i, o, o, o, o, o, o, o, o, o, o) language stdcall 
+nondeterm  spsrt_for_c(sex, string, sexe, integer, integer, string, 
+							string, slist) 
+		- (o, o, o, o, o, o, o, o) language stdcall
+		%as "spsrt_for_c_0"
+
+nondeterm  opg_for_c(integer,wedscat,tgnst,integer,integer,integer,tijd) - 
+	   (o, o, o, o, o, o, o) (o, i, o, o, o, o, o) language stdcall
+nondeterm  wc_for_c(wedscat,string,wedstyp,string,sexlist,real,wedscat) -
+	   (o, o, o, o, o, o, o)(i, o, o, o, o, o, o) language stdcall
+nondeterm  wd_for_c(integer,wedscat,tgnst,tgnst,string,tijd) - 
+	   (o, i, o, o, o, o) (o, i, i, o, o, o) (o, i, o, i, o, o) 
+	   		(i, i, o, o, o, o) language stdcall
+nondeterm  w2_for_c(integer,wedscat,tijd,janee,janee,char,tijd) - 
+		     (o, i, o, o, o, o, o)(o, o, o, o, o, o, o) 
+		     (i, i, o, o, o, o, o) language stdcall
+		     % NB zonder baannummer!
+nondeterm  w3_for_c(integer,wedscat,tgnst,tijd) - 
+			(o, i, o, o) (i, i, o, o)(o, o, o, o) language stdcall
+nondeterm  ws_for_c(integer, wedscat, tgnst, tijd) -
+                        (o, i, o, o) language stdcall 
+
+nondeterm  pos_for_c(wedscat, integer, integer, rsoort) -
+			(i, o, o, o) language stdcall
+
+nondeterm  dag_for_c(integer,string,wrk) - (o, o, o) (i, o, o) language stdcall
+
+determ     betaal_adm_for_c(janee) - (o) language c as "_betaal_adm_for_c_0"
+
+determ     oproepen_for_c(janee) - (o) language c 
+
+determ	sleuteltekst_for_c(string) - (o) language c
+
+determ  naam_for_c(string, integer, string) - (o, o, o) language c
+
+nondeterm  blok_for_c(wedscat, verhl) - (i, o) language stdcall
+nondeterm  blLft_for_c(integer Leeft, verhl) - (i, o) language stdcall
+
+%determ     assert_vol4c(tijd) - (i) language c as "_assert_vol4c_0"
+
+%nondeterm  vol4c(tijd) - (o) language stdcall % as "vol4c_0"
+
+determ
+   de_spelers(integer,     /* wedstrijdnummer                */
+	      wedscat,     /* onderdeel                      */ 
+	      tgnst,       /* tegenstander                   */ 
+	      tgnst,       /* tegenstander                   */
+	      integerlist)     /* lijst van -potentiele- spelers */ 
+	      - (i,i,i,i, o) language c %as "de_spelers_0"
+procedure gekoppeld(tijd BeginT, integer Num, wedscat, tgnst, tgnst, tijd)- (i,i,i,i,i,o)
+determ gekoppeld4c(tijd BeginT, integer Num, wedscat, tgnst, tgnst, tijd) - (i,i,i,i,i,o) language c
+%procedure integer shGetFolderPath(integer,integer,integer,integer,string)-(i,i,i,i,o) language stdcall as "_SHGetFolderPathA@20"
+procedure getFolder(string Mijndocumenten, string Toernooien, string Gedeeld, string Backups) - (o,o,o,o)
+procedure onlinebackup(string Reden) - (i)
+determ verbindingMislukt(integer) - (i)
+determ  invoerbaar(integer, wedscat, BOOLEAN) - (i, i, o)(i,i,i)
+determ  planbaar(integer, wedscat, BOOLEAN) - (i, i, o)(i,i,i)
+determ  planMeteen( boolean) - (i)
+determ  wisplanbaar(integer, wedscat, BOOLEAN) - (i, i, o)
+determ  corrigeerbaar(integer, wedscat, BOOLEAN) - (i, i, o)
+determ beeldBaar(integer, wedscat, BOOLEAN) - (i,i,o) (i,i,i)
+determ baanbaar(integer, wedscat, BOOLEAN) - (i,i,o)
+
+determ jaNee2Bool(janee, BOOLEAN) - (i,o) (o,i)
+determ strepen(integer Hoeveel, char Welk) - (i,i)
+procedure logclose()
+procedure isLeeg(string, string) - (i, o)
+
+%BEGIN_DECL, System generated global predicates
+GLOBAL PREDICATES
+  win_editor_Create(WINDOW Parent, string Text, string Titel) - (i,i,i)
+  %dlg_rapport_html_Create(WINDOW Parent) - (i)
+%END_DECL
+
+procedure selectGeen(WINDOW) - (i)
+procedure selectAlle(WINDOW) - (i)
+procedure getWcDisp(wedscat, integer) - (i,o)
+procedure updateWcDisp(wedscat, integer) - (i,i)
+%checkhaspf(integer, integer) - (i,i)	% failt als geen hasp
+% checkhaspt(integer, integer) - (i,i)	% retract fullfunc als geen hasp
+procedure   reverse(integerlist In, integerlist Hulp, integerlist Out) - (i,i,o) 
+procedure   reverse(ilist In, ilist Hulp, ilist Out) - (i,i,o)
+procedure  reverse(ulist, ulist, ulist) - (i,i,o)
+procedure   reverse(tijdl In, tijdl Hulp, tijdl Out) - (i,i,o)
+procedure   reverse(wpl In, wpl Hulp, wpl Out) - (i,i,o)
+procedure   reverse(cTreeView::tree_list,cTreeView::tree_list,cTreeView::tree_list) - (i,i,o)
+procedure   reverse(slist, slist, slist) - (i, i, o)
+procedure   reversestr(string In, string Hulp, string Out) - (i,i,o)
+%procedure naw_begin(offset)
+%procedure copyNaw(BOOLEAN DOScompat, WINDOW Progress, string, string) - (i,i,i,i)
+procedure copyTextFile(string, string) - (i,i)
+determ searchLaatste(string String, char Char, integer BeginPos, integer LaatstePos) - (i, i, i, o)
+
+  prt_speelt(wtl,integer,integer,janee,integer,integer,slist,slist,integer,integer) - (i,i,o,i,i,i,i,o,i,o)
+  speeltSList(integer, wl,integer,integer,janee,slist,slist,integer,integer) - (i,i,i,o,i,i,o,i,o)
+  speeltSListAfdr(integer, wl,integer,integer,janee,slist,slist,integer,integer) - (i,i,i,o,i,i,o,i,o)
+  qsortw(wl, wl) - (i, o)
+  qsortwt(wtl,wtl) - (i, o)
+  speeltijden1(wl,wtl) - (i,o)
+
+nondeterm te_plannen(integer PersNo, integer WedsNo, wedscat, integer LR) - (i, o, o, o) (i, o, i, o)
+
+  lastdir(string, string, string) - (i, o, o)
+  lastdir(string, string, string, string)  - (i, i, o, o)
+
+determ  lr(tgnst, tgnst, tgnst, integer) - (o, i, i, i) (i, i, i, o)
+determ  spTelPlus(tgnst, string Tel, string Namen) - (i, o, o)	% 3 telefoonnummers
+determ  afzeggenSList(integer PersNo, SList, SList, integer Aantal, integer) - (i, i, o, i, o)
+determ  tgnst_num(tgnst, integer PersNo) - (i, i) (i, o)
+determ  te_plannenList(integer, SList) - (i, o)
+determ  get_dag1(tijd Dagtijd, integer Dag) - (o, o)
+procedure vensterpositie(integer ID, WINDOW) - (i, i)
+procedure dialoogpositie(integer ID, WINDOW) - (i, i)
+procedure updatevensterpositie(integer ID, WINDOW) - (i, i)
+procedure add_baan(janee, string, string) - (i, i, o)
+determ    isOnderCat(wedscat) - (i)
+procedure bovencat(wedscat, wedscat) - (i, o)
+nondeterm bovencat_nd(wedscat, wedscat) - (i, o)
+nondeterm voorronde(wedscat, wedscat) - (i, o)
+determ    voorrondes(wedscat,boolean) - (i,o) (i,i)
+determ    stelsel(wedscat Hoofdronde, catl Voorrondes) - (i, o)
+determ    xSpelsoort(wedscat Cat, string MVs, wedsex MVd, string WTs, wedstyp WTd) - (i, o, o, o, o)
+determ xSpelsoort1(string , wedsex)	- (i,o) (o,i) 
+
+procedure geplaatstePoule(wedscat, string, integer) - (i, o, i)
+procedure repRowH(integer, wedscat, integer Offset, tgnst, /*jeugda,*/ string St, string Naam, janee Persoon, slist Kolomvalues, string Bondsnr, string Gebdatum, string Distr, string Stx, string Naamx, janee Persoonx, slist KolomvaluesX, string Bondsnrx, string Gebdatumx, string Distrx, string BreakDubbel, kolomtypeL) - (i, i, i, i, o, o, o, o, o, o, o, o, o, o, o, o, o, o, o, i)
+nondeterm tgnstNum(tgnst, persno) - (i, o) (i, i)
+procedure removeDubl(slist, slist, slist) - (i, i, o)
+procedure removeDubl(integerlist, integerlist, integerlist) - (i, i, o)
+determ getNth(integer N, catl In, wedscat Elem) - (i,i,o) 
+procedure metaTag(string, string Tag) - (o, o)
+determ metTekst(string) - (i)
+procedure get_webmap(string) - (o)
+procedure get_tempdir(string Dir, string TempFile) - (o, o)
+procedure rapport_CSS(string CSSContent) - (o)
+nondeterm koplv(wedscat CatV, wedscat Cat) - (i,o) (o,i) (i,i)
+nondeterm namenX(integerlist, menu_item) - (i, o)
+determ emailSturen(MAPINAMEADDR_LIST Aan,MAPINAMEADDR_LIST CCList,MAPINAMEADDR_LIST BCCList,string Titel,string Tekst,MAPIFILEDESC_LIST Bestanden) - (i,i,i,i,i,i)
+procedure locList(slist) - (o)
+nondeterm afgekeurdeopgaven(wedscat, integer) - (i,o) (o,o)
+nondeterm nietgekeurdeopgaven(wedscat, integer) - (i,o) (o,o)
+procedure rsoort2bitmap(wedscat, cTreeView::bitmapId) - (i, o)
+procedure urlEncode(string In, string In, string Uit) - (i, i, o)
+procedure persoonMoetNogTotaal(integer SpNo, string Onderdelen, integer ZekerAfval, integer ZekerPoule, integer Bijwinst, integer Plaatsing, wedscat DruksteOnderdeel) - (i,o,o,o,o,o,o)
+determ drukterapport(integer) - (i) % 0 = altijd  1 = igv rapport
+determ wedsurgrapport(catl) - (i)
+procedure parseTabs(string, slist) - (i, o)	% string met tabs naar stringlist
+procedure timeGrid(integerlist) - (i)
+procedure slots(verhl, integer UitKantoor, integer Slots) - (i, i, o)
+%procedure dagrapport(dagstat, string File) - (i,o)
+procedure dagrapport(string File) - (o)
+procedure dagrapport1(string DSel) - (i)
+determ dagrapport2(integer Dag) - (i)
+%determ vandaagOfMorgen(dagstat, integer Dag, boolean) - (i,o,o)
+procedure knelpuntenrapport()
+nondeterm  debanen(integer Baan) - (o)
+determ compsexes(sexlist, sexlist) - (i, i)
+procedure writeToJournaal(string, janee) - (i,i)
+procedure writeToJournaal(string) - (i)
+procedure   misser(string, integer) - (i,i)
+determ tkalrequest1(string Anchor) - (i)
+%determ archiefrequest(string Anchor) - (i)
+procedure slist aanmeldenVars() 
+procedure integer toernooidag()
+procedure functionarisP(ftype, string Tid, string Naam, string Email, string Tel1, string Tel2, string Tel3) - (i, i, o, o, o, o, o)
+%procedure findcategoriestats(string) - (o)
+determ posP(wedscat Selected, wedscat Echt, integer, integer, rsoort) - (o,i, o,o,o) (o,i, o,o,i)
+procedure resetBelangrijkeEventCounter()
+procedure belangrijkeEventsP(integer) - (o)
+procedure incrBelangrijkeEventCounter()
+procedure synchKlapper(integer ReturnK, string Bestand, boolean FtpOK) - (i,i,o)
+procedure vergelijkTicket(string, string) - (i,i)
+procedure close_editorwin()
+determ isKwalificatie(wedscat, boolean TrueIsSectie) - (i,o)
+determ isNRt(wedscat) - (i)
+nondeterm district1(integer, string Kort, string Lang) - (o,i,o) (o,o,o) (i,o,o)
+procedure vertaaldistrict(string Oud, string Nieuw) - (i,o)
+procedure makeTicket(string In, string Uit) - (i,o)
+determ licentiecheck(string Waarvoor, string Reststring) - (i,o)
+procedure providerX(string URL, string Naam, string OLproc, string ToernooimapOnline) - (o, o, i, o)
+procedure string visSession(string, string) - (i,i)
+procedure toernooiTypeP(string, toernooisoort) - (i,o)
+%procedure checkkoppelingen()
+% determ    checkkoppelingen2(catl, boolean AR) - (i, o)
+procedure htmlTimer(string Tekst) - (i) language C
+determ isPoulePoule(wedscat Cat, integer MaxRondes) - (i, o)
+nondeterm ppRondeCats_nd(wedscat Cat, integer N, wedscat CatPP) - (i,i,o)
+%procedure dos_padPC(string) - (o)
+nondeterm getToernooiDirs(string) - (o)
+procedure voegtoeAanToernooidirs(string) - (i)
+procedure toBR(string, string) - (i, o)
+determ checkServer(integer) - (i)
+procedure string visBEHEERid(string) - (i)
+determ rsoort2bitmap1(rsoort Afval, wcorigine Ond, teamstatus Opg,   cTreeView::bitmapId) - (i,i,i,o)
+procedure rsoort2bitmap2(wcorigine Ond, teamstatus Opg,  cTreeView::bitmapId) - (i,i,o)
+procedure opgKeur(catl, teamstatus) - (i,o)
+procedure switchKeur(wcorigine, wcorigine) - (i,o)
+

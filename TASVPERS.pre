@@ -1,0 +1,38 @@
+/*****************************************************************************
+
+		Copyright (c) 1989 - 1998 De Lint Associates
+
+ Project:  TASVPI
+ FileName: TASVPERS.PRE
+ Purpose: Predicate definitions for TASVPERS.PRO
+ Written by: JdL
+ Comments:
+******************************************************************************/
+
+%BEGIN_DECL, System generated global predicates
+GLOBAL PREDICATES
+  dlg_persoonsgegevens_Create(WINDOW Parent, dbasedom SpelergegevensIn) - (i,i)
+  dlg_opgeven_Create(WINDOW Parent) - (i)
+  tb_formulierbar_Create(WINDOW Parent) - (i)
+  dlg_tidsynchronisatie_Create(WINDOW Parent) - (i)
+%END_DECL
+  update_sp(dbasedom, dbasedom) - (i, i)
+determ partnerCritFout(wedscat CatN, integer PersNo, boolean Messages, boolean IFail) - (i, i, i, i)
+determ   partnerCritFout1(wedscat, string Naam,sex, string, string, string, boolean Messages, string Msg) - (i,i,i,i,i,i,i,o)
+procedure sterkteSel(string, slist, integer, integer) - (i, i, i, o)
+procedure spstItem2SpSterkte(string, string Spsterkte) - (i, o)
+procedure upd_formulier()
+%procedure getRating(slist Misc, string RE, string RD) - (i, o, o)
+% procedure updateRating(string RE, string RD, slist Misc, slist Misc) - (i, i, i, o)
+%determ bankNrfout(string, string Msg) - (i, o)
+procedure alIngedeeld(tgnst Tgnst, wedscat Cat, integer) - (i, i, i)
+procedure close_Formulier()
+procedure close_Formulier(integer SpNo) - (i)
+%procedure enableWis(WINDOW, boolean) - (i, o)
+determ addNote(integer SpNo, string EmailOfSMS) - (i,i)
+procedure  orde(string, string, integer, integer, integer, integer) - (i,i,i,i,o,o)
+procedure mess(slist, string) - (i,o)
+determ schemasoortAR(wedscat, string OnderdeelId)  - (i,i)
+procedure splitGeb(string, string, boolean, paspoort) - (i,o,o,o)
+procedure addpaspoort(string Geb, boolean Pasp, string Uit) - (i,i,o)
+

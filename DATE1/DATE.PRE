@@ -1,0 +1,118 @@
+/*****************************************************************************
+
+               Copyright (c) 1984 - 2000 Prolog Development Center A/S
+
+ FileName:	DATE.PRE
+ Purpose:	Date and Time format handling. Global predicates declaration.
+ Written by:	Alexander Butovsky
+ Version: 	1.0
+ Build:		012.990119
+ Tested with:   Visual Prolog v.5.1 build 555a
+ Comments:
+******************************************************************************/
+ifndef date_dom_included
+ #Error: this file requires include: date.dom
+enddef 
+
+constants
+  date_pre_included = 1
+
+global predicates
+  procedure dt_offset_to_time(TIME_OFFSET,INTEGER Hour,INTEGER Mins) - (i,o,o)
+  procedure dt_offset_to_min(MINUT_OFFSET,INTEGER Y,INTEGER M,INTEGER W,INTEGER Dm,INTEGER Dw,INTEGER Hour,INTEGER Mins) - (i,o,o,o,o,o,o,o)
+  procedure dt_offset_to_min(MINUT_OFFSET,DT_START_END,INTEGER Y,INTEGER M,INTEGER W,INTEGER Dm,INTEGER Dw,INTEGER Hour,INTEGER Mins) - (i,i,o,o,o,o,o,o,o)
+  procedure dt_offset_to_date(DATE_OFFSET,INTEGER Y,INTEGER M,INTEGER W,INTEGER Dm,INTEGER Dw) - (i,o,o,o,o,o)
+
+  procedure dt_time_to_offset(INTEGER H,INTEGER Min,TIME_OFFSET) - (i,i,o)
+  procedure dt_min_to_offset(INTEGER Y,INTEGER M,INTEGER D,INTEGER H,INTEGER Min,MINUT_OFFSET) - (i,i,i,i,i,o)
+  procedure dt_date_to_offset(INTEGER Y,INTEGER M,INTEGER D,DATE_OFFSET) - (i,i,i,o)
+
+  procedure dt_timeoffset_to_str(TIME_OFFSET,STRING) - (i,o)
+  procedure dt_timeoffset_to_str(TIME_OFFSET,STRING FormatString,STRING) - (i,i,o)
+  procedure dt_minoffset_to_str(MINUT_OFFSET,STRING) - (i,o)
+  procedure dt_minoffset_to_str(MINUT_OFFSET,STRING FormatString,STRING) - (i,i,o)
+  procedure dt_minoffset_to_str(MINUT_OFFSET,DT_START_END,STRING FormatString,STRING) - (i,i,i,o)
+  procedure dt_dateoffset_to_str(DATE_OFFSET,STRING) - (i,o)
+  procedure dt_dateoffset_to_str(DATE_OFFSET,STRING FormatString,STRING) - (i,i,o)
+
+  procedure dt_timestr_to_offset(STRING,TIME_OFFSET) - (i,o)
+  procedure dt_timestr_to_offset(STRING,STRING FormatString,TIME_OFFSET) - (i,i,o)
+  procedure dt_minstr_to_offset(STRING,MINUT_OFFSET) - (i,o)
+  procedure dt_minstr_to_offset(STRING,STRING FormatString,MINUT_OFFSET) - (i,i,o)
+  procedure dt_datestr_to_offset(STRING,DATE_OFFSET) - (i,o)
+  procedure dt_datestr_to_offset(STRING,STRING FormatString,DATE_OFFSET) - (i,i,o)
+
+  procedure dt_date_get_error(INTEGER ErrCode,STRING ErrStr) - (o,o)
+
+% Options in FormatString:
+%	%YS	Year short format 2 digits
+%	%Ys	Year short format 1 or 2 digits
+%	%YL	Year long format 4 digits
+%	%MD	Month digit format (always 2 digits, 01, 02 ...)
+%	%Md	Month digit format (1 or 2 digits)
+%	%MN	Month full name format 
+%	%Mn	Month short name format 
+%	%WD	Week digit format (from year begin) (always 2 digits, 01, 02 ...)
+%	%Wd	Week digit format (from year begin) (1 or 2 digits)
+%	%DD	Day digits format (from month begin) (always 2 digits, 01, 02 ...)
+%	%Dd	Day digits format (from month begin) (1 or 2 digits)
+%	%DN	Day full name format
+%	%Dn	Day short name format
+%	%HH	Hours (always 2 digits, 01, 02 ...) 24-hour clock
+%	%Hh	Hours (1 or 2 digits) 24-hour clock
+%	%hH	Hours (always 2 digits, 01, 02 ...) 12-hour clock
+%	%hh	Hours (1 or 2 digits) 12-hour clock
+%	%TT	Full time marker string, (AM or PM for ex.)
+%	%Tt	Short time marker string, (A or P for ex.)
+%	%MM	Minuts (always 2 digits, 01, 02 ...)
+%	%Mm	Minuts (1 or 2 digits)
+%	%DR	Relative date (default - from 00-00-0000 00:00 with 1440 min (1 day) step,
+%		may be changed using 'date_relative_format' predicate, also may be set 
+%		to enum format using 'date_relative_list' predicate.
+%	%AR	Relative day numbers (default - from 00-00-0000 00:00 with 1440 min (1 day) step,
+%		'From' may be changed using 'day_relative_format' predicate.)
+%	%WR	Relative week numbers (default - from 00-00-0000 00:00 with 10080 min (7 days)step,
+%		'From' may be changed using 'week_relative_format' predicate.)
+
+  procedure STRING dt_win_to_str(STRING WinFormatString) - (i)
+
+  procedure dt_week_year_to_offset(INTEGER Week,INTEGER Year,DATE_OFFSET) - (i,i,o) (o,o,i)
+
+  procedure dt_get_date(STRING) - (o)
+  procedure dt_get_date(STRING,STRING FormatString) - (o,i)
+  determ dt_legal_date(STRING) - (i)
+  determ dt_legal_date(STRING,STRING FormatString) - (i,i)
+
+  procedure dt_add_month(STRING,INTEGER,STRING) - (i,i,o)
+
+  procedure dt_mins_date_time(MINUT_OFFSET,DATE_OFFSET,TIME_OFFSET) - (i,o,o) (o,i,i)
+  procedure dt_mins_date_time_str(MINUT_OFFSET,STRING,STRING) - (i,o,o) (o,i,i)
+
+
+% If ListOfNames = [] - set default
+  procedure dt_date_month_list(SLIST ListOfNames) - (i) (o)
+% If ListOfNames = [] - set default
+  procedure dt_date_shortmonth_list(SLIST ListOfNames) - (i) (o)
+% If ListOfNames = [] - set default
+  procedure dt_date_day_list(SLIST ListOfNames) - (i) (o)
+% If ListOfNames = [] - set default
+  procedure dt_date_shortday_list(SLIST ListOfNames) - (i) (o)
+% If TimeMarkerString = "" - set default (See %TT format string option)
+  procedure dt_time_marker(STRING TimeMarkerStringAM,STRING TimeMarkerStringPM) - (i,i) (o,o)
+% If TimeMarkerString = "" - set default (See %Tt format string option)
+  procedure dt_time_shortmarker(STRING TimeMarkerStringA,STRING TimeMarkerStringP) - (i,i) (o,o)
+% If BeginMin = 0 and StepMin = 0 - set default
+  procedure dt_date_relative_format(MINUT_OFFSET BeginMin,MINUT_OFFSET StepMin) - (i,i) (o,o)
+% If ListOfNames = [] - set relative - digital
+  procedure dt_date_relative_list(SLIST ListOfNames) - (i) (o)
+% Set/Get First day of week (should be >= 1 and <= 7)
+  procedure dt_date_firstdayofweek(INTEGER FirstDayOfWeek) - (i) (o)
+
+  procedure dt_day_relative_format(MINUT_OFFSET BeginMin) - (i) (o)
+  procedure dt_week_relative_format(MINUT_OFFSET BeginMin) - (i) (o)
+
+% Set/Get start year value for short (two digit) year format.
+% This value defines how DATE module handles short (2 digits) year format.
+% If input value is less than StartYear then DATE module adds 2000
+% years considering that year is belonging to XXI century.
+  procedure dt_date_2digit_start_year(USHORT StartYear) - (i) (o)

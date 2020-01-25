@@ -1,0 +1,48 @@
+/*****************************************************************************
+
+		Copyright (c) 1989 - 1998 De Lint Associates
+
+ Project:  TASVP1
+ FileName: TASPLAN.PRE
+ Purpose: Predicate definitions for TASPLAN.PRO
+ Written by: JdL
+ Comments:
+******************************************************************************/
+
+%BEGIN_DECL, System generated global predicates
+GLOBAL PREDICATES
+  dlg_ondbloktijden_Create(WINDOW Parent) - (i)
+  dlg_ondbloktijdensel_Create(WINDOW Parent) - (i)
+  dlg_ondbloktijddef_Create(WINDOW Parent) - (i)
+  dlg_onderdplanmult_Create(WINDOW Parent) - (i)
+  dlg_onderdplanmultwis_Create(WINDOW Parent) - (i)
+  dlg_wedsplanwis_Create(WINDOW Parent, integer, wedscat) - (i,i,i)
+  dlg_opgave_check_Create(WINDOW Parent) - (i)   % voortgang...
+  dlg_regelmatige_webupdate_Create(WINDOW Parent) - (i)
+  dlg_webupdateregelmaat_Create(WINDOW Parent, boolean MetSchemas) - (i,i)
+  dlg_bezwaren_Create(WINDOW Parent, integer, wedscat, string, integer) - (i,i,i,i,o)
+%END_DECL
+%determ	   schort_op1(integer,wedscat,schl,schl) - (i, i, i, o)
+%determ  plan_wd0(WINDOW, integer,integer,wedscat,tijd) - (i, i, i, i, i)
+%determ  herplan(WINDOW, schl) - (i, i)
+determ  planAangewezenWeds(WINDOW, integer No, wedscat) - (i, i, i)
+determ  afgelasten(WINDOW, integer No, wedscat) - (i,i,i)
+%determ  fixeer(WINDOW, integer No, wedscat) - (i,i,i)
+determ  reprBlokList(verhl, slist, slist) - (i, i, o)
+determ  items2tijden(integer, ilist, string, period) - (i, i, o, o)
+procedure   mergeBl(period, verhl, verhl) - (i, i, o)
+procedure     kwartlist(slist) - (o)
+procedure remove(integer, integer, verhl, verhl) - (i, i, i, o)
+	   na_vorige(integer,wedscat,tgnst,tgnst,tijd) - (i,i,i,i,o)
+nondeterm  baan_tijden(integer Dag,tijd,string Out,integer,wedscat,integer Result, integer Tijd) - (i,i,o,i,i,o,o)
+procedure  checkvoortgang(integer, string) - (i, i) language c
+procedure  checkvoortgangsetsoftstop()   %language c
+procedure  curlprogressPr(real, real, real, real) - (i,i,i,i) language c
+procedure   autoweboptie2int(integer, integer HTMLFtp, hoevaak, string Betekenis) - (i,i,i,o)
+procedure  autowebP(integer Int, integer HTMLFTP, integer Waarsch, string GEBRUIKER, 
+         string WACHTWOORD, string FTPadres, string Directory,
+         integer GeenVasteVerbinding, hoevaak, integer BijSluiten) - (o,o,o,o,o,o,o,o,o,o)
+%procedure integer vragenOmverbinding(boolean Vasteverb, boolean WasAlVerbinding) - (i, i)
+procedure wisplanAlle(window)
+nondeterm planTijd(integer Dag, string Tijd, integer TijdSec) - (i,o,o)
+nondeterm  tijdstr2tijd(string, tijd) - (i,o)

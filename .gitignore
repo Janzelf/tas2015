@@ -1,0 +1,15 @@
+*.bak
+*.pdf
+/toernooien
+/obj
+*.nst
+*.odt
+*.bk1
+tasvp1.exe
+maakform
+*.hlp
+*.grd
+*.db
+tasvp1.con
+/webmap
+*.zip

@@ -1,0 +1,40 @@
+/*****************************************************************************
+
+		Copyright (c) 1989 - 1998 De Lint Associates
+
+ Project:  TASVP1
+ FileName: TASTABEL.PRE
+ Purpose: Predicate definitions for TASTABEL.PRO
+ Written by: JdL
+ Comments:
+******************************************************************************/
+
+%BEGIN_DECL, System generated global predicates
+GLOBAL PREDICATES
+  dlg_clubstabel_Create(WINDOW Parent) - (i)
+  dlg_clubgegevens_Create(WINDOW Parent, string Key, string NKey) - (i,i,o)
+  dlg_spelersoorten_Create(WINDOW Parent) - (i)
+  dlg_spsoort_Create(WINDOW Parent, integer Index) - (i,i)
+  dlg_dagen_Create(WINDOW Parent) - (i)
+  dlg_dagdefinitie_Create(WINDOW Parent, BOOLEAN Update, ulong DagNo, ulong DagUit) - (i, i, i, o)
+  dlg_baanbeschikbaarheid_Create(WINDOW Parent) - (i)
+  dlg_baandagkopie_Create(WINDOW Parent) - (i)
+  dlg_onderdeelkenmerken_Create(WINDOW Parent) - (i)
+  tb_spelerselectb_Create(WINDOW Parent) - (i)
+  dlg_daguurkwart_Create(WINDOW Parent, tijd InitTijd) - (i, i)
+%END_DECL
+nieuwe_club(WINDOW, string) - (i, i)
+manVrouw(wedstyp, sexlist, wedsex) - (i, i, o)
+club_f(string, string) - (i,o)
+procedure naarAbsoluut()
+procedure naarOud()
+%nondeterm clubSpeler(string) - (o)
+determ checkPaswoord(window Parent) - (i)
+determ checkvink(wedscat, wedscat, integer TreeSel) - (i,i,o)
+procedure closeMeteenKenmerken()
+determ samenvoegenSpelersoorten()
+procedure  kwartierinterval(slist) - (o)
+procedure verhuisWC(wedscat, wedscat) - (i,i)
+procedure initspsrt()
+
+

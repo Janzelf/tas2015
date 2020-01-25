@@ -1,0 +1,6 @@
+kenmerkwin(~27048C)
+waarschuwen
+noradio(0)
+refresh(1)
+t_wc(wc(1,"",0,"Dames Enkelspel  Speelsterkte 5-6",e,"DEB",[2],"5",leeftijd("18",18),leeftijd("",0),dames,"16",vanzelf,"",5))
+t_vink(1,1)

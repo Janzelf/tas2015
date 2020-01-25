@@ -1,0 +1,126 @@
+/*****************************************************************************
+
+		Copyright (c) 1989 - 1998 De Lint Associates
+
+ Project:  TASVPI
+ FileName: TASVERH.PRE
+ Purpose: Predicate definitions for TASVERH.PRO
+ Written by: JdL
+ Comments:
+******************************************************************************/
+
+%BEGIN_DECL, System generated global predicates
+GLOBAL PREDICATES
+  dlg_verhindernieuw_Create(WINDOW Parent, integer Speler, verhl Verhinderingen, verhl NieuweVerh) - (i, i, i, o)
+
+  dlg_toernooibeleid_Create(WINDOW Parent) - (i)
+  dlg_toernooistart_Create(WINDOW Parent) - (i)
+  dlg_deel_in_Create(WINDOW Parent, slist TidL) - (i,i)
+  dlg_deel_in_poule_Create(WINDOW Parent, wedscat Onderdeel) - (i,i)
+  dlg_compress_Create(WINDOW Parent) - (i)
+  dlg_toernooiinstellingen_Create(WINDOW Parent, ilist Focus) - (i, i)
+  dlg_indelingsrapport_Create(WINDOW Parent, integer Mode, string Titel) - (i,i,i)
+  dlg_troostronde_Create(WINDOW Parent, string DialoogNaam, boolean Return) - (i, i, o)
+  dlg_deel_in_1_Create(WINDOW Parent) - (i)
+  dlg_candidatenvergelijking_Create(WINDOW Parent, string Speler, slist Candidaten, string Selected, string INr) - (i,i,i,o,i)
+  dlg_onderdeelgegevens_Create(WINDOW Parent, integer Return) - (i, o)
+  dlg_uitloten_Create(WINDOW Parent, wedscat Uitlootcat) - (i, i)
+  dlg_emailsmsinstellingen_Create(WINDOW Parent) - (i)
+%END_DECL
+  procedure checkstart(string Tid)
+  procedure wdnumOud2Nieuw(wedscat, integer WNoOud, integer WNoNieuw) - (i, i, i)
+  procedure compress(uploadtype) - (i)
+%  begin(WINDOW Progress)
+  indelingX()
+  determ  toon_plaatsing1(wedscat,tgl,integer,rsoort,integer) - (i, i, i, i, i)
+  determ certificaatAanwezig(window, string Tid, string VerlopenOp, integer NogXdagen) - (i,i,o, o)
+
+  toon_indeling()
+  toon_plaatsing(wedscat) - (i)
+  ronde_bij_af(wedscat) - (i)
+  %closeDeelinWin()
+  echt(tgnst,tgnst) - (i, i)
+  procedure apw(wedscat,integerlist,integer,rsoort,boolean SkeletOnly) - (i, i, i, i, i)
+  opg_tgnst_list(wedscat, integerlist, il) - (i, i, o)
+procedure  soort2string(wedstyp, wedsex, string) - (i, i, o)
+procedure deelDelenInInPoule(catl, DIALOG_CONTROL_ID) - (i, i)
+procedure merge_verh(verhl, verhl, janee ErIsOverlap) - (i, o, o)
+procedure   saveVereniging(string,string,string,string,string,string,string,string,string,string) - (i, i, i, i, i, i, i, i, i, i)
+nondeterm  opg_cat(string,wedscat,integer) - (o, i, i) (o, o, i)
+%procedure selecteerCat() 
+del_log(string File)
+%procedure  ruim_opT(wedscat) - (i)    logf('T', wd(1,N,onbekend,onbekend,"",0), ja), 
+%procedure  scan_sterkte(wedscat, integer, integerList) - (i, i, o)
+  get_st(tgnst, string, string, integer, integer, boolean Msgs)  - (i, o, o, o, o, i)
+%  st_list(slist) - (o)
+%nondeterm  leeftijden(integer) - (o)
+  handm_cat(wedscat, integer) - (i, i)
+determ  checkOpgegCrit(wedscat, tgnst, boolean Messages) - (i, i, i)
+procedure pouleOpenX(wedscat Cat, integer Tereserveren, rsoort Poule) - (i,i,i)
+nondeterm  opgeg(wedscat, integerlist, rec, integer Gereserveerd)  - (i,i,o,i) , (i,i,rec(o,o,o,i,o,o,o),i)
+determ tgnst_id(tgnst, string) - (i,o)
+%determ keurBestandDatum(integer Dagen , integer FullTijdstip, string Bestand, ulong Size) - (o,o,o,o)
+%nondeterm logBestandDatum(integer FullTijdstip) - (o)	% moet failen!
+nondeterm juistAantalGeplaatsten(wedscat, integer Count, string, integer) - (i, i, o, o)
+procedure verwerkcheck(integer, string CheckedData, string Report, boolean Verbose, boolean Onecht) - (i,i,i,i,i)
+procedure xml_geboortedatum(string RuweGeboortedatum, janee Uitgebreid, integer EenOfTwee) - (i,i,i)
+determ toernooidatum(string) - (o)
+%determ checkMogelijk()
+procedure vulMetKnopen(window, slist Tids) - (i,i)
+procedure   deleteKnopen(WINDOW) -(i)
+procedure   deleteKnopen(WINDOW, cTreeView::tree_list) - (i,i)
+%procedure visLicentie()
+%determ updateLicentie()
+%procedure   checkPlaatsing(wedscat) - (i)
+determ checkPlaatsing1(integerlist, integer N, integer PlMax, integerlist Missende) - (i,i,i,o)
+procedure signaleerMissende(integerlist) - (i)
+procedure bondsnr(string, string) - (i, o)
+determ  t_kopl_ext(wedscat CatVan, vandom, wedscat Onderdeel, ipvdom) - (i, i, o, o)
+nondeterm poulOnd_ext(window, wedscat) - (o, i)
+procedure emailsmsP(string, integer, mapinameaddr) - (o,o,o) (o,o,mapinameaddr(o,o))
+procedure elkeWerkdag(ilist, integer, ilist) - (i,i,o)
+procedure zetSelect(window LboxWin, ilist NListR) - (i,i)
+nondeterm soortgelijkeDagen(integer I, ulist, integer, integer Uit) - (i,i,i,o)
+%determ alsOnline()
+procedure closeMeteenDeelIn()
+procedure setUitslagenableMasterrecord(string Op, string Pin) - (i,i)
+ procedure getKNLTBdefinities(string Tnr, janee Silent, boolean CheckDates, boolean Resultaat) - (i,i,i,o)
+nondeterm looptag(string Tag) - (i)
+procedure xml_tag(string Tag, string Value) - (i,i)
+procedure xml_tag_opt(string Tag, string Value) - (i,i)
+determ sp2deelnemer(integer) - (i)
+procedure tgnst2deelnemer(tgnst) - (i)
+procedure wedsex2geslacht(wedsex, string) - (i, o)
+procedure getControleresultaat()
+procedure herhaalcontrole(string Tid) - (i) % niet global!
+procedure doDeelinrefresh()
+procedure setCheckwachten()
+%procedure stopmetchecken()
+procedure vertaalSexNrs(sexlist, sexlist) - (i,o)
+procedure toernooiKP(string Tid, string) - (i,o)
+%procedure checkkwalificatie(string Tnr, janee Log) - (i,i)
+procedure cleankoppelingen()
+procedure uniekNaam(string Naam, string Kort) - (i,i)
+%procedure uniekNaam(string Naam, string, string Kort, string) - (i,i,i,i)
+%procedure uniekKort(string, string) - (i,o)
+  determ gebruiktonderdeel(wedscat) - (i)
+procedure handleVerKoppeling(wedscat Van, wedscat Naar) - (i,i)
+nondeterm teVerbinden(wedscat, string) - (i,o) % kan gegroepeerd worden
+procedure edgHDGconvert(wedstyp, wedsex, wedstyp, wedsex) - (i,i,o,o)
+procedure wisonderdeelnr()
+procedure autobackup(boolean, string) - (o,o)
+procedure cleanrelaties()	% 25.7.2016
+
+
+
+
+
+
+
+
+
+
+
+
+
+

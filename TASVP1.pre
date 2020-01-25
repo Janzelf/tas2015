@@ -1,0 +1,53 @@
+/*****************************************************************************
+
+		Copyright (c) 1989 - 1998 De Lint Associates
+
+ Project:  TASVPI
+ FileName: TASVPI.PRE
+ Purpose: Predicate definitions for TASVPI.PRO
+ Written by: JdL
+ Comments:
+******************************************************************************/
+
+%BEGIN_DECL, System generated global predicates
+GLOBAL PREDICATES
+
+  project_ShowHelpContext(string Index) - (i)
+  dlg_about_dialog_Create(WINDOW Parent) - (i)
+  tb_project_toolbar_Create(WINDOW Parent) - (i)
+%  tb_help_line_Create(WINDOW Parent) - (i)
+  dlg_print_onderdelen_Create(WINDOW Parent, SLIST Selectie, slist Preselect) - (i, o, i)
+  win_onderdeelselectie_Create(WINDOW Parent) - (i)
+  tb_project_bottom_Create(WINDOW Parent) - (i)
+%END_DECL
+procedure knipper_toolbar()
+determ get_toernooidir(string, string Lasttoken, lokatie, string Bestand) - (o, o, o, o)
+procedure toernooiDirReset()
+set_toernooidir(string, string Bestand) - (i,i)
+items2indexes(integer Aantal, ILIST IndexList) - (i, o)
+%get_poule_tel(integer) - (o)(i)
+loadPrintConfig1()
+nondeterm wedscat_ingedeeld(string, BOOLEAN Gekoppeld, wedscat, boolean Finales) - (o, i, o, i)
+getplansel(integer, DIALOG_CONTROL_ID) - (i, o) (o, i)
+findIndex(SLIST, integer VanafDagNum, integer BeginBij0, integer IDC_VANAF1_SELECT) - (i,i,i,o)
+findDag(integer, string) - (o, i)
+procedure update_proj_toolbar()
+procedure preselect(SLIST, integer, integer) - (i,i,o)
+procedure   cycleOnd(char) - (i)
+loadPrintConfig()
+printOnderdelen(SLIST Selectie) - (i)
+printOnderdelen(WINDOW PrintWin, FONT, BOOLEAN PrRichting, RCT Afmeting, integer FontSize)- (i,i,i,i,i)
+nondeterm  knoop(wedscat, cTreeView::tree, integer UitgebreideNaam,slist TidL) - (o, o, i, i), (i, o, i, i)
+nondeterm  knoopIngedeeld(cTreeView::tree) - (o)
+procedure close_onderdeelselect()
+procedure overblijvendeOpgave(wedscat, cTreeView::itemstate, cTreeView::itemstate, overbl) - (i, i, o, i)
+procedure removeBold(cTreeView::itemstate, cTreeView::itemstate) - (i, o)
+procedure status2get(sl, string In, string Uit) - (i, i, o)
+procedure waarnaar(integer, beeld) - (i, o)
+determ handlecontact(integer Resp, string)
+procedure updatetoernooidirsave()
+determ getParmString(string) - (o)  % er is een commandline-toernooibestand
+procedure integer programmaUpdate(integer Step, string URL, string uitBestand, slist Vars) - (i,i,i,i) language c
+
+
+

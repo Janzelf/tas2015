@@ -1,0 +1,65 @@
+/*****************************************************************************
+
+		Copyright (c) 1989 - 1998 De Lint Associates
+
+ Project:  TASVPI
+ FileName: TASVSPR.PRE
+ Purpose: Predicate definitions for TASVSPR.PRO
+ Written by: JdL
+ Comments:
+******************************************************************************/
+
+global predicates
+
+schema_draw(WINDOW, FONT Norm, wedscat Onderdeel, RCT PageSize, integer Paginasel, integer AfmVert, integer VanafDag, integer TmDag, BOOLEAN Waardering, integer Opschuiven, BOOLEAN Kleur, BOOLEAN Kader, BOOLEAN Opvullen, integer FontSize, string MinKolsHor, string MinKolsVert) - (i,i,i,i,i,i,i,i,i,i,i,i,i,i,i,i)
+afmetingEx(wedscat CatNo, WINDOW Printwin, integer PaginaSel, integer VanafDag, integer TmDag, RCT PapierAfm, integer AfmHor, integerlist AfmVert, integer AantalBlz, BOOLEAN Waardering,BOOLEAN Opvullen,string MinKolsHor,string MinKolsVert) - (i,i,i,i,i,i,o,o,o,i,i,i,i)
+draw_footer(WINDOW PrintWin, RCT Papier, integer FontSize) - (i,i,i)
+open_blzEx(WINDOW PrintWin) - (i) 
+startJobEx()
+getBlzNr(integer Nr) - (o)
+%procedure naamVanToernooi(string Naam, string Nummer, string Datum, string WebTicket, string District) - (o,o,o,o,o)
+nondeterm waardering(integer Van, integer Tot, integer Punten, integer Kol) - (o,o,o,o) (o,o,o,i)
+nondeterm resultaat(string Tekst, integer Kol, integer Card) - (o,o,o)
+uitsl_win1(integer, wedscat, tgnst, tgnst) - (i, i, o, o)
+sleuteltekst1(string) - (o)%BEGIN_DECL, System generated global predicates
+GLOBAL PREDICATES
+  dlg_printmarges_Create(WINDOW Parent) - (i)
+  win_kladblok_Create(WINDOW Parent) - (i)
+  tb_kladbloktb_Create(WINDOW Parent) - (i)
+  dlg_bloktijden_per_leeftijd_Create(WINDOW Parent) - (i)
+  dlg_bloktijden_per_leeftijd_bij_Create(WINDOW Parent) - (i)
+  dlg_email_algemeen_Create(WINDOW Parent, meeltype) - (i,i)
+  %dlg_incasso_Create(WINDOW Parent, string RekeningNummer, string ToernooiNaam, MINUT_OFFSET Boekdatum, integer Aantaldelen) - (i,o,o,o,o)
+  dlg_email_oproep_Create(WINDOW Parent, integer Ret, oproepaan Wie) - (i,o,i)
+  tb_lifebar_Create(WINDOW Parent) - (i)
+%END_DECL
+procedure kladblokPopup()
+procedure kladblokUpd()
+procedure kladblokrefresh()
+procedure close_kladblok()
+procedure close_emailWin()
+procedure emailuitvoer(WINDOW) - (i)
+procedure smsbulkuitvoer(window) - (i)
+procedure emailuitvoerEnkel(window, integer SpNo, string Naam, string Email, string Bondsnummer) - (i,i,i,i,i)
+procedure stuurberichtenOproep(window, oproepaan) - (i, i)
+procedure stuurSMS(window, integer) - (i, i)
+% incassoTekst()
+ savekladblok()
+determ kladblokTimerOn()
+%procedure stuurberichtenX(window Parent, oproepaan, integer Tot) - (i,i,i)
+procedure getbevestigingen()
+%procedure substitueer(integer SpNo, string, string, boolean MetVervolg, integer In, integer PlanInhoud) - (i, i, o, i, i, o)
+%procedure zetEmailadresZelf(string Email) - (i)
+procedure emailadresZelfP(string Email, string Naam) - (o,o)
+determ    dagnumEval(integer In, integer Out) - (i, o)
+determ incassonr(string Naam, string Nummer, string NummerOut) - (i,i,o)
+procedure setEmailWinTimer() % gebruikt bij pdcedit/idc_custom control
+procedure getPer(window, vehikel) - (i,o)
+determ vehikel2rb(window, vehikel, integer) - (i,i,o)
+procedure  emailfout()
+determ string selectMobielNr(string, string, string, meeltype) - (i,i,i,i)
+nondeterm emailprovider(string) - (o)
+procedure uitslagEnableUpload()
+procedure uitslagendownload(boolean Verbose) - (i)
+
+

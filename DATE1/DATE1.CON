@@ -1,0 +1,255 @@
+/*****************************************************************************
+
+               Copyright (c) 1984 - 2000 Prolog Development Center A/S
+
+ FileName:	DATE.CON
+ Purpose:	Date and Time format handling. Constants.
+ Written by:	Alexander Butovsky
+ Version:	1.0
+ Build:		012.990119
+ Tested with:   Visual Prolog v.5.1 build 555a
+ Comments: 
+******************************************************************************/
+ifndef date_pre_included
+ #Error: this file requires include: date.pre
+enddef 
+
+
+ifndef language_english
+  ifndef language_danish
+    ifndef language_russian
+      ifndef language_dutch
+      >>>> Application must declare one of the constants below before including
+ 	   this file in order to select one of the languages for the names of
+ 	   the months and days:
+
+		language_english = 1
+	   or
+		language_danish  = 1
+	   or
+		language_russian = 1
+      enddef
+    enddef
+  enddef
+enddef
+
+constants
+  dt_day_to_jan	=	31
+  dt_day_to_feb	=	59
+  dt_day_to_mar	=	90
+  dt_day_to_apr	=	120
+  dt_day_to_may	=	151
+  dt_day_to_jun	=	181
+  dt_day_to_jul	=	212
+  dt_day_to_aug	=	243
+  dt_day_to_sep	=	273
+  dt_day_to_oct	=	304
+  dt_day_to_nov	=	334
+  dt_day_to_dec	=	365
+
+  dt_day_in_week	=	7
+  dt_day_in_year	=	365
+  dt_day_in_year1	=	366
+  dt_day_in_4_year	=	1461
+  dt_day_in_100_year	=	36524
+  dt_day_in_400_year	=	146097
+
+  dt_day_in_jan	=	31
+  dt_day_in_feb	=	28
+  dt_day_in_feb1=	29
+  dt_day_in_mar	=	31
+  dt_day_in_apr	=	30
+  dt_day_in_may	=	31
+  dt_day_in_jun	=	30
+  dt_day_in_jul	=	31
+  dt_day_in_aug	=	31
+  dt_day_in_sep	=	30
+  dt_day_in_oct	=	31
+  dt_day_in_nov	=	30
+  dt_day_in_dec	=	31
+
+ifdef language_dutch
+  dt_month_name_1 = "januari"
+  dt_month_name_2 = "februari"
+  dt_month_name_3 = "maart"
+  dt_month_name_4 = "april"
+  dt_month_name_5 = "mei"
+  dt_month_name_6 = "juni"
+  dt_month_name_7 = "juli"
+  dt_month_name_8 = "augustus"
+  dt_month_name_9 = "september"
+  dt_month_name_10 = "oktober"
+  dt_month_name_11 = "november"
+  dt_month_name_12 = "december"
+  dt_month_shortname_1 = "jan"
+  dt_month_shortname_2 = "feb"
+  dt_month_shortname_3 = "mrt"
+  dt_month_shortname_4 = "apr"
+  dt_month_shortname_5 = "mei"
+  dt_month_shortname_6 = "jun"
+  dt_month_shortname_7 = "jul"
+  dt_month_shortname_8 = "aug"
+  dt_month_shortname_9 = "sep"
+  dt_month_shortname_10 = "okt"
+  dt_month_shortname_11 = "nov"
+  dt_month_shortname_12 = "dec"
+  dt_day_name_1 = "maandag"
+  dt_day_name_2 = "dinsdag"
+  dt_day_name_3 = "woensdag"
+  dt_day_name_4 = "donderdag"
+  dt_day_name_5 = "vrijdag"
+  dt_day_name_6 = "zaterdag"
+  dt_day_name_7 = "zondag"
+  dt_day_shortname_1 = "ma"
+  dt_day_shortname_2 = "di"
+  dt_day_shortname_3 = "wo"
+  dt_day_shortname_4 = "do"
+  dt_day_shortname_5 = "vr"
+  dt_day_shortname_6 = "za"
+  dt_day_shortname_7 = "zo"
+  dt_markertime_am="AM"
+  dt_markertime_pm="PM"
+  dt_shortmarkertime_am="A"
+  dt_shortmarkertime_pm="P"
+enddef	/*** language_english ***/
+ifdef language_english
+  dt_month_name_1 = "January"
+  dt_month_name_2 = "February"
+  dt_month_name_3 = "March"
+  dt_month_name_4 = "April"
+  dt_month_name_5 = "May"
+  dt_month_name_6 = "June"
+  dt_month_name_7 = "July"
+  dt_month_name_8 = "August"
+  dt_month_name_9 = "September"
+  dt_month_name_10 = "October"
+  dt_month_name_11 = "November"
+  dt_month_name_12 = "December"
+  dt_month_shortname_1 = "Jan"
+  dt_month_shortname_2 = "Feb"
+  dt_month_shortname_3 = "Mar"
+  dt_month_shortname_4 = "Apr"
+  dt_month_shortname_5 = "May"
+  dt_month_shortname_6 = "Jun"
+  dt_month_shortname_7 = "Jul"
+  dt_month_shortname_8 = "Aug"
+  dt_month_shortname_9 = "Sep"
+  dt_month_shortname_10 = "Oct"
+  dt_month_shortname_11 = "Nov"
+  dt_month_shortname_12 = "Dec"
+  dt_day_name_1 = "Monday"
+  dt_day_name_2 = "Tuesday"
+  dt_day_name_3 = "Wednesday"
+  dt_day_name_4 = "Thursday"
+  dt_day_name_5 = "Friday"
+  dt_day_name_6 = "Saturday"
+  dt_day_name_7 ="Sunday"
+  dt_day_shortname_1 = "Mon"
+  dt_day_shortname_2 = "Tue"
+  dt_day_shortname_3 = "Wed"
+  dt_day_shortname_4 = "Thu"
+  dt_day_shortname_5 = "Fri"
+  dt_day_shortname_6 = "Sat"
+  dt_day_shortname_7 ="Sun"
+  dt_markertime_am="AM"
+  dt_markertime_pm="PM"
+  dt_shortmarkertime_am="A"
+  dt_shortmarkertime_pm="P"
+enddef	/*** language_english ***/
+ifdef language_danish
+  dt_month_name_1 = "Januar"
+  dt_month_name_2 = "Februar"
+  dt_month_name_3 = "Marts"
+  dt_month_name_4 = "April"
+  dt_month_name_5 = "Maj"
+  dt_month_name_6 = "Juni"
+  dt_month_name_7 = "Juli"
+  dt_month_name_8 = "August"
+  dt_month_name_9 = "September"
+  dt_month_name_10 = "Oktober"
+  dt_month_name_11 = "November"
+  dt_month_name_12 = "December"
+  dt_month_shortname_1 = "Jan"
+  dt_month_shortname_2 = "Feb"
+  dt_month_shortname_3 = "Mar"
+  dt_month_shortname_4 = "Apr"
+  dt_month_shortname_5 = "Maj"
+  dt_month_shortname_6 = "Jun"
+  dt_month_shortname_7 = "Jul"
+  dt_month_shortname_8 = "Aug"
+  dt_month_shortname_9 = "Sep"
+  dt_month_shortname_10 = "Okt"
+  dt_month_shortname_11 = "Nov"
+  dt_month_shortname_12 = "Dec"
+  dt_day_name_1 = "Mandag"
+  dt_day_name_2 = "Tirsdag"
+  dt_day_name_3 = "Onsdag"
+  dt_day_name_4 = "Torsdag"
+  dt_day_name_5 = "Fredag"
+  dt_day_name_6 = "Lшrdag"
+  dt_day_name_7 ="Sшndag"
+  dt_day_shortname_1 = "Man"
+  dt_day_shortname_2 = "Tir"
+  dt_day_shortname_3 = "Ons"
+  dt_day_shortname_4 = "Tor"
+  dt_day_shortname_5 = "Fre"
+  dt_day_shortname_6 = "Lшr"
+  dt_day_shortname_7 ="Sшn"
+  dt_markertime_am="AM"
+  dt_markertime_pm="PM"
+  dt_shortmarkertime_am="A"
+  dt_shortmarkertime_pm="P"
+enddef	/*** language_danish ***/
+ifdef language_russian		% Sorry for those who havn't cyrillic fonts...
+  dt_month_name_1 = "Января"
+  dt_month_name_2 = "Февраля"
+  dt_month_name_3 = "Марта"
+  dt_month_name_4 = "Апреля"
+  dt_month_name_5 = "Мая"
+  dt_month_name_6 = "Июня"
+  dt_month_name_7 = "Июля"
+  dt_month_name_8 = "Августа"
+  dt_month_name_9 = "Сентября"
+  dt_month_name_10 = "Октября"
+  dt_month_name_11 = "Ноября"
+  dt_month_name_12 = "Декабря"
+  dt_month_shortname_1 = "Янв"
+  dt_month_shortname_2 = "Фев"
+  dt_month_shortname_3 = "Мар"
+  dt_month_shortname_4 = "Апр"
+  dt_month_shortname_5 = "Мая"
+  dt_month_shortname_6 = "Июн"
+  dt_month_shortname_7 = "Июл"
+  dt_month_shortname_8 = "Авг"
+  dt_month_shortname_9 = "Сен"
+  dt_month_shortname_10 = "Окт"
+  dt_month_shortname_11 = "Ноя"
+  dt_month_shortname_12 = "Дек"
+  dt_day_name_1 = "Понедельник"
+  dt_day_name_2 = "Вторник"
+  dt_day_name_3 = "Среда"
+  dt_day_name_4 = "Четверг"
+  dt_day_name_5 = "Пятница"
+  dt_day_name_6 = "Субота"
+  dt_day_name_7 ="Воскресенье"
+  dt_day_shortname_1 = "Пон"
+  dt_day_shortname_2 = "Вто"
+  dt_day_shortname_3 = "Сре"
+  dt_day_shortname_4 = "Чет"
+  dt_day_shortname_5 = "Пят"
+  dt_day_shortname_6 = "Суб"
+  dt_day_shortname_7 ="Вос"
+  dt_markertime_am="AM"
+  dt_markertime_pm="PM"
+  dt_shortmarkertime_am="A"
+  dt_shortmarkertime_pm="P"
+enddef	/*** language_russian ***/
+
+% Constant below defines how DATE module handles short (2 digits) year format.
+% If input value is less than date_two_digit_start_year DATE module adds 2000
+% years considering that year is belong to XXI century.
+% Application may override constant value by declaring it's own constant
+% with the same name before including DATE.CON source file.
+ifndef dt_date_two_digit_start_year
+  dt_date_two_digit_start_year = 20
+enddef

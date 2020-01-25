@@ -1,0 +1,44 @@
+/*****************************************************************************
+
+		Copyright (c) 1989 - 2005 De Lint Associates
+
+ Project:  TASVP1
+ FileName: tasvparse.PRE
+ Purpose: Predicate definitions for TASVPARSE.PRO
+ Written by: JdL
+ Comments:
+******************************************************************************/
+global domains
+xml_attrlistP = integer
+xml_parser = integer
+xml_StartElementHandler = procedure (integer UserData, string Name, xml_attrlistP Attrs) - (i,i,i) language c 
+xml_EndElementHandler = procedure (integer UserData, string Name) - (i,i) language C
+
+global predicates
+
+procedure string xml_ExpatVersion() - () language c as "_XML_ExpatVersion"
+procedure xml_parser xml_ParserCreate(string Codepage) - (i) language c as "_XML_ParserCreate"
+procedure xml_SetStartElementHandler(xml_parser, xml_StartElementHandler)  - (i,i) language c  as "_XML_SetStartElementHandler"
+procedure xml_SetEndElementHandler(xml_parser, xml_EndElementHandler) - (i,i)  language c as "_XML_SetEndElementHandler"
+procedure integer xml_Parse(xml_parser, binary Source, integer Length, integer IsFinal) - (i,i,i,i)  language c as "_XML_Parse"
+procedure xml_ParserFree(xml_parser) - (i)  language c as "_XML_ParserFree"
+
+%procedure getExpatVersion()
+%openElem1 : xml_StartElementHandler
+procedure tokenizeAllExpat(binary, string Rest) - (i, o) 
+procedure slist xml_GetAttributes(xml_attrlistP) - (i) language c
+procedure xml_inschrijfInvoerExpat(slist FileNamen, integer Opschonen) - (i,i)
+procedure xml_inschrijfinvoerNieuw() 
+procedure xml_inschrijfinvoerNieuwFile() 
+procedure xml_invoer_file()
+%procedure xml_invoer_vanopgavemap()
+procedure setsoftstop()
+%BEGIN_DECL, System generated global predicates
+GLOBAL PREDICATES
+  dlg_onderdeelmatch_Create(WINDOW Parent, string OnderdeelIn, slist Candidaten, string Selected) - (i,i,i,o)
+%END_DECL
+procedure sex1(string, sexe) - (o, i)
+procedure xml_controlelijst(WINDOW)
+procedure utf_8_to_ansi(string UTF, string ANSI_STR) -(i,o)
+determ    herkenOnderdeel(string, string, wedsex, string, string, string, wedscat) - (i,i,i,i,i,i,o)
+

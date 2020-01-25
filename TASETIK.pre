@@ -1,0 +1,45 @@
+/*****************************************************************************
+
+		Copyright (c) 1989 - 1998 De Lint Associates
+
+ Project:  TASVP1
+ FileName: TASETIK.PRE
+ Purpose: Predicate definitions for TASETIK.PRO
+ Written by: JdL
+ Comments:
+******************************************************************************/
+
+%BEGIN_DECL, System generated global predicates
+GLOBAL PREDICATES
+  dlg_etiketten_oproep_Create(WINDOW Parent, Slist Selectie, integer PlanTM) - (i, o, o)
+  dlg_etiketten_print_Create(WINDOW Parent, integer EndButton) - (i, o)
+  dlg_etikesoort_Create(WINDOW Parent) - (i)
+  dlg_etiketten_betaal_Create(WINDOW Parent, slist Groepen, integer Orde ) - (i,o,o)
+  dlg_internetget_Create(WINDOW Parent) - (i)
+%END_DECL
+integer internetGet(slist Post, string OutputFile) - (i, i)  % wordt alleen gebruikt in get_toernooidir 
+etikettenBetaal(WINDOW Parent) - (i)
+etikettenOproep(WINDOW Parent) - (i)
+%mailmergeBetaal(WINDOW Parent) - (i)
+mailmergeOproep(WINDOW Parent) - (i)
+oproeplijst(WINDOW Parent) - (i)
+procedure betaalIncasso(boolean BetaaldIncl) - (i)
+procedure betaalIncassoProef()
+
+ek_preview_handler : EHANDLER
+procedure etiketBuild(slist) - (i)
+determ  etik_reset()
+determ  printetiketten(integer OKButton, janee TestFrame) - (i, i)
+procedure sum(catl,real,real,string,string) - (i, i, o,i,o)
+nondeterm sp_cat(integer,wedscat) - (i, o)
+%nondeterm sp_catX(integer, wedscat) - (i,o)
+nondeterm partners(integer, string) - (i, o)
+procedure  prt_partnermm(slist) - (i)
+nondeterm wcMetSpelers(string) - (o)
+etikettenAdres1(slist Namen, integer Mode) - (i,i)
+procedure spelerdata(integer, dbasedom,string) - (i, i, o)
+procedure clubP(string, string, string) - (i, o, o)
+procedure zeefFamilie(catl, catl, catl) - (i,i,o)
+
+
+procedure financieel() 	% 22.12.2015

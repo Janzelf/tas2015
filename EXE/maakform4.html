@@ -1,0 +1,53 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=iso-8859-1">
+<HEAD><TITLE>Inschrijfformulier</TITLE>
+
+<Style type="text/css">
+/* kleuren etc. van de onderdelentabel als geen stylesheet gebruikt wordt: */
+Body {font: x-small verdana,arial,helvetica,sans-serif;background-color : linen}
+H1 {text-align=center;COLOR=darkblue}
+TD {font-size: x-small}
+THEAD {background-color : lemonchiffon}
+#oOnderdelenbody {background-color : khaki}
+</Style>
+
+</HEAD>
+<BODY>
+
+<SCRIPT LANGUAGE="JavaScript" SRC="maakform4.js">
+</SCRIPT>
+
+<SCRIPT LANGUAGE="JavaScript">
+
+// het service programma,
+var cgiexe  = "http://www.toernooiklapper.nl/opgaveberichtx.php";
+
+/*******************************************************************************
+ * de volgende variabelen kunnen EVENTUEEL aangepast worden aan de installatie *
+ *******************************************************************************/
+
+// waar en hoe het formulier zijn xml-definitie kan vinden
+// zoals gegenereerd door de Toernooi Assistent:
+var xmlmap = "inschrijfform4.xml";	
+var reglement = "reglement.html";
+
+
+// de plaats van uw stylesheet !!!NB met volledige URL svp!!!!
+var mystylesheet = "http://www.toernooiklapper.nl/maakform.css";
+
+
+// verander desgewenst logozelf in de URL van uw eigen logo
+// voorbeeld:
+var logozelf = "http://www.toernooiklapper.nl/images/ta2.gif";
+
+
+//var debug  = "ja";	
+
+
+hoofdroutine();
+
+
+
+</SCRIPT>
+</BODY></HTML>

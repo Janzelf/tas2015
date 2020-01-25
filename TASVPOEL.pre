@@ -1,0 +1,52 @@
+/*****************************************************************************
+
+		Copyright (c) 1989 - 1998 De Lint Associates
+
+ Project:  TASVPI
+ FileName: TASVPOEL.PRE
+ Purpose: Predicate definitions for TASVPOEL.PRO
+ Written by: JdL
+ Comments:
+******************************************************************************/
+
+%BEGIN_DECL, System generated global predicates
+GLOBAL PREDICATES
+  win_poule_window_Create(WINDOW Parent, string Onderdeel, integer WedsNo, integer KolomVooraan, tgnst Sp) - (i,i,i,i,i)
+  cleanPouleWindow(Window) - (i)
+  win_situatie_window_Create(WINDOW Parent, integer, wedscat, tijd) - (i, i, i, i)
+  dlg_baannummer_Create(WINDOW Parent, integer No, wedscat) - (i,i,i)
+  tb_situatiebar_Create(WINDOW Parent) - (i)
+  win_wedstrijdopmerkingen_Create(WINDOW Parent, integer, wedscat) - (i,i,i)
+%END_DECL
+  poule_draw(WINDOW Printwin, wedscat Onderdeel, integer PlanTM, RCT Papier, integer Opschuiven, FONT FontNorm, integer FontSize) - (i, i, i, i, i, i, i)
+  pouleAfmetingEx(WINDOW PrintWin, wedscat Cat, integer PageSel, integer VanafDag, integer TmDag, RCT Papier, integer Hor, integerlist Vert, integer AantalBlz) - (i,i,i,i,i,i,o,o,o)  
+procedure  close_situatie()
+procedure  close_poules()
+  update_poule()		% de huidige poule
+  update_poule(wedscat) - (i)
+  situatie(WINDOW Parent, integer, wedscat, tijd) - (i, i, i, i)  % tijd = 0 neem bestaande w2
+procedure  open_nextCat(char NextPrev, wedscat Curr) - (i,i)
+  poule_ranking1(wedscat, integer, tgnst, ilist Saldo, string) - (i, i, o, o, o)
+nondeterm   poule_ranking_alle(wedscat, integer, tgnst, integer) - (i, o, o, o)
+%  focus_poule()
+%  current_poule(WINDOW, wedscat) - (o,o)
+  skiptoken(string, string) - (i, o)	% ook in uitslag!
+  pouleHTM(wedscat, integer DagTM,/* formaliteit, jeugda,*/ boolean MetSpeelsterkte, kolomtypeL) - (i, i, i, i)
+  %xml_poulestand(wedscat Cat, wedscat Hoofdronde) - (i, i)
+procedure update_situatie()
+%  procedure removeDublenBlank(slist, slist, slist) - (i, i, o)
+  procedure write_b(string Eigen, string Uit) - (i, o)
+  procedure reg_baannr(slist) - (i)
+procedure setPouleNaam(wedscat, string) - (i, i)
+%nondeterm namen1(tgnst, tgnst, menu_item) - (i, i, o)  	% 16.7.2014
+%procedure repRowH(tgnst, jeugda, string Naam, string Bondsnr, string Gebdatum, string Distrx, string Naamx, string Bondsnrx, string Gebdatumx, string Distrx, string BreakDubbel) - (i, i, o, o, o, o, o, o, o, o, o)
+procedure plaatsingHTML(wedscat, tgnst, string Color, string ColorEnd, string, string, boolean HilitePlts) - (i, i, o, o, i, o, i)
+%nondeterm  rep_p(WINDOW, wedscat, tgnst, tgnst, integer Punten, string Uitslag, tijd, integer WedsNo, integer OffsX,
+%       janee Oproepen, string HtmlAnker, string Winnaarklasse, string HTMLuitslag) - (i,i,i,i,o,o,i,i,i,i,o,o,o),(i,i,i,o,o,o,i,o,i,i,o,o,o),(i,i,i,i,o,o,i,o,i,i,o,o,o)
+procedure puntenorig(tgnst T1, tgnst Winnar, string Uitslag, integer Punten) - (i,i,i,o)
+procedure uitsl_games(string Uitslag, integer, integer, integer, integer) - (i,o,o,o,o)
+procedure punten(integer, integer, integer) - (i,i,o)
+determ restore_toolbar(window) - (i)
+procedure andere(tgnst, tgnst, tgnst, tgnst) - (i,i,i,o)
+findlokaties(slist) - (o)
+procedure useeditcontrol(integer, string) - (i, i)

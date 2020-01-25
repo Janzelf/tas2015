@@ -1,0 +1,66 @@
+/*****************************************************************************
+
+		Copyright (c) 1989 - 1999 De Lint Associates
+
+ Project:  TASVP1
+ FileName: TASCOMM.PRE
+ Purpose: Predicate definitions for TASCOMM.PRO
+ Written by: JdL
+ Comments:
+******************************************************************************/
+
+/*
+class comPortObj
+
+predicates
+
+procedure new(WINDOW AssociatedWindow)
+procedure delete()
+ dial(string Dialstring)
+procedure setupCom
+
+endclass comPortObj
+*/
+%BEGIN_DECL, System generated global predicates
+
+GLOBAL PREDICATES
+  dlg_maak_webpaginas_Create(WINDOW Parent, beeld Print, catl PreselectBovenCats, boolean Noshow) - (i, i, i, i)
+  dlg_inschralg_Create(WINDOW Parent) - (i)
+  dlg_toernooiexport_Create(WINDOW Parent, integer Return) - (i,o)
+  %win_browser_Create(WINDOW Parent, string URL, string WindowTitel, browserisvoor) - (i,i,i,i)
+  dlg_inschrspeler_Create(WINDOW Parent) - (i)
+%END_DECL
+
+xml_inschrijfExp(WINDOW, slist) - (i, i)
+procedure expSpeler(string Offset, string Element, integer Sp, integer Beperkt) - (i, i, i, i) % Beperkt = 1
+
+procedure ap2str(wedscat, rsoort, string Verbose, string Kort) - (i, i, o, o)
+procedure linkSpelerprofiel(string, string, janee) - (i, i, i)
+%procedure closebrowser()
+determ toernooiKopie(window, string) - (i, o)
+
+procedure loadCats(catl, slist, catl UpperCats) - (i, o, o)
+determ  get_Htmlmap(string) - (o)
+procedure get_formmap(string Map) - (o)
+procedure scanRetourAdres(string RText0, string RText) - (i, o)
+nondeterm formfileU(string Volledigenaam, string Kort, integer HTMLFTP) - (o, o, i)
+determ toernooiWeekJaar(integer DatumOffset, integer Weeknr, integer Jaar) - (o, o, o)
+determ checkUiterste(integer Uiterste)  % formuliercheck
+procedure integer responseOK(string Filenaam, string Test) - (i, i) language c
+procedure slist visPostVarsUit(string Bestand) - (i) language c
+procedure integer uploadFTP(string URL, string pad, slist bestanden, string rapport, string gebruiker,
+         integer compress) - (i, i, i, i, i, i) language c
+
+nondeterm catMetCrit(wedscat, string, slist Uitzonderingen) - (o, o, i)
+procedure integer downloadData(string URL, string Bestand, slist Vars, integer Resp, integer MetProgress) - (i,i,i,o,i) language c  % algemeen zonder fileupload
+procedure closeOpen(string BestandsNaam, string Kort, string Type) - (i,i,i)
+procedure logoErBijTop()
+postHtml(boolean ZonderLinks) - (i)
+procedure weblayout1(beeld AfdrOfBrowse, string CSSnaam, ilist Flags, kolomtypeL, ilist FontGrL, string Mededeling, catl Selected) - (i,o,o,o,o,o,o)
+procedure zetzwartwit(beeld, boolean ZwWit) - (i,i)
+determ  toernooiNaamWebOngelijk(boolean NoSwow) - (i)
+determ string autoNewInternetId()
+procedure toNrs(string, string) - (o, o)
+procedure browser_ctl(string) - (i)
+%procedure browser_emailen()
+

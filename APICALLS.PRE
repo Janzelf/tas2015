@@ -1,0 +1,140 @@
+/*****************************************************************************
+
+		Copyright (c) 1984 - 2000 Prolog Development Center A/S
+
+ Project:
+ FileName: APICALLS.PRE
+ Purpose: A Visual Prolog interface to OS API calls
+ Written by: Konstantin Ivanov & Compiler Group
+ Comments:
+******************************************************************************/
+
+ifndef ws_win
+  ifdef platform_32bit
+    ifndef os_os2
+      #error Unsupported platform
+    enddef
+  elsedef
+    #error Unsupported platform
+  enddef
+enddef
+
+ifndef apicalls_dom_included
+  #Error apicalls.dom must be included
+enddef
+
+ifndef apicalls_con_included
+  #Error apicalls.con must be included
+enddef
+
+  constants
+
+    apicalls_pre_included = 1
+
+  global predicates
+
+    procedure OS_HANDLE api_LoadLibrary( STRING LibraryName )			- (i)
+    procedure		api_FreeLibrary( OS_HANDLE LibraryHandle )		- (i)
+    procedure	DWORD	api_GetProcAddress( OS_HANDLE LibraryHandle,
+    					    STRING FuncHandle )			- (i,i)
+    procedure	LONG	api_RegOpenKey( HKEY Key, STRING SubKey, HKEY Result )	- (i,i,o)
+    procedure	LONG	api_RegCloseKey( HKEY Key )				- (i)
+    procedure	LONG	api_RegEnumKey( HKEY Key, DWORD Index, STRING SubKey )	- (i,i,o)
+    procedure	LONG	api_RegQueryValue( HKEY Key, STRING Subkey, STRING Value )- (i,i,o)
+    procedure	STRING	api_GetProfileString( STRING AppName, STRING KeyName,
+    					     STRING Default )			- (i,i,i)
+    procedure	UNSIGNED api_GetProfileInt( STRING AppName, STRING KeyName,
+    					     INTEGER Default )			- (i,i,i)
+    procedure		api_ShellExecute( API_HWND Hwnd, STRING Operation,
+    					  STRING File, STRING Parameters,
+    					  STRING DefaultDir, INTEGER ShowCmd )	- (i,i,i,i,i,i)
+    procedure 		api_GetWindowsDirectory( STRING Dir )		 	- (o)
+    ifdef os_nt
+
+      procedure  	api_GetUserName( STRING UserName )			- (o)
+      procedure  	api_GetComputerName( STRING ComputerName )		- (o)
+      procedure DWORD 	api_GetVersion()					- language stdcall as api_GetVersion_FNS
+      procedure 	api_GetVersionEx( OSVERSIONINFO Info)			- (o)
+      procedure         api_CloseHandle( OS_HANDLE Handle ) 			- (i)
+      procedure DWORD   api_GetLastError()		 			- language stdcall as api_GetLastError_FNS
+      procedure         api_GetSystemDirectory( STRING Dir )		 	- (o)
+
+      procedure DWORD 	api_SuspendThread( OS_HANDLE Thread )			- (i)
+      procedure DWORD 	api_ResumeThread( OS_HANDLE Thread )			- (i)
+      procedure 	api_TerminateThread( OS_HANDLE Thread, DWORD ExitCode ) - (i,i)
+      procedure INTEGER api_GetThreadPriority( OS_HANDLE Thread )		- (i)
+      procedure 	api_SetThreadPriority( OS_HANDLE Thread,
+      					       INTEGER Priority )		- (i,i)
+      procedure DWORD 	api_GetExitCodeThread( OS_HANDLE Thread )		- (i)
+      procedure DWORD 	api_WaitForSingleObject( OS_HANDLE Handle,
+      						 DWORD Timeout )		- (i,i)
+      procedure DWORD 	api_WaitForMultipleObjects( OS_HANDLE_LIST Handles,
+      						    BOOLEAN WaitAll,
+      						    DWORD Timeout )		- (i,i,i)
+      procedure 	api_GetShortPathName( STRING LongName,
+      					      STRING ShortName )		- (i,o)
+      procedure		api_GetSystemTime( SYSTEMTIME SystemTime )		- (o)
+      procedure		api_GetProcessTimes(  OS_HANDLE Process,
+      					      FILETIME CreationTime,
+      					      FILETIME ExitTime,
+      					      FILETIME KernelTime,
+      					      FILETIME UserTime )		- (i,o,o,o,o)
+      procedure		api_GetThreadTimes(   OS_HANDLE Thread,
+      					      FILETIME CreationTime,
+      					      FILETIME ExitTime,
+      					      FILETIME KernelTime,
+      					      FILETIME UserTime )		- (i,o,o,o,o)
+      procedure		api_FileTimeToLocalFileTime( FILETIME FileTime,
+      						     FILETIME LocalFileTime )	- (i,o)
+      procedure		api_FileTimeToSystemTime(  FILETIME FileTime,
+      						   SYSTEMTIME SystemTime )	- (i,o)
+      procedure	OS_HANDLE api_RegisterEventSource( STRING UNCServerName,
+						   STRING SourceName )		- (i,i)
+      procedure 	api_DeregisterEventSource( OS_HANDLE EventLog )		- (i)
+      procedure		api_ReportEvent( OS_HANDLE EventLog, WORD Type,
+      					 WORD Category, DWORD EventID,
+					 SLIST Strings, BINARY RawData
+					)					- (i,i,i,i,i,i)
+      procedure OS_HANDLE api_FindFirstChangeNotification( STRING PathName,
+     							BOOLEAN WatchSubtree,
+     							DWORD_LIST NotifyFilter )- (i,i,i)
+      procedure		api_FindNextChangeNotification( OS_HANDLE ChangeHandle )- (i)
+      procedure		api_FindCloseChangeNotification( OS_HANDLE ChangeHandle )- (i)
+
+      procedure OS_HANDLE api_GetStdHandle( DWORD StdHandle ) 			- (i)
+      procedure STRING 	api_CharToOem( STRING Src )				- (i)
+      procedure STRING 	api_OemToChar( STRING Src )				- (i)
+
+      procedure STRING	api_MultiByteToWideChar( UNSIGNED CodePage,
+     						DWORD_LIST Flags, STRING Src )	- (i,i,i)
+      procedure STRING	api_WideCharToMultiByte( UNSIGNED CodePage,
+     						DWORD_LIST Flags, STRING Src )	- (i,i,i)
+      procedure STRING	api_WideCharToMultiByte( UNSIGNED CodePage,
+     						DWORD_LIST Flags, STRING Src,
+     						STRING DefaultChar,
+     						BOOLEAN UsedDefaultChar )	- (i,i,i,i,i)
+      procedure UNSIGNED api_lstrlen( STRINGW WideCharString )			- (i)
+
+      procedure STRING	api_GetNumberFormat( LCID Locale, DWORD_LIST Flags,
+      					     STRING Value, NUMBERFMT ValueFmt )	- (i,i,i,i)
+      procedure STRING	api_GetLocaleInfo( LCID Locale, LCTYPE LCType )		- (i,i)
+
+      procedure OS_HANDLE api_CreateEvent( BOOLEAN ManualReset,
+					   BOOLEAN InitialState,
+					   STRING  Name )			- (i,i,i)
+      procedure		api_ResetEvent( OS_HANDLE EventHandle )			- (i)
+      procedure		api_SetEvent( OS_HANDLE EventHandle )			- (i)
+
+      procedure		api_InitializeCriticalSection( CRITICAL_HANDLE CrtH )	- (i) language stdcall as api_InitializeCriticalSection_FNS
+      procedure		api_DeleteCriticalSection( CRITICAL_HANDLE CrtH )	- (i) language stdcall as api_DeleteCriticalSection_FNS
+      procedure		api_EnterCriticalSection( CRITICAL_HANDLE CrtH )	- (i) language stdcall as api_EnterCriticalSection_FNS
+      procedure		api_LeaveCriticalSection( CRITICAL_HANDLE CrtH )	- (i) language stdcall as api_LeaveCriticalSection_FNS
+
+    enddef
+
+    ifdef platform_16bit
+
+      procedure STRING 	api_AnsiToOem( STRING Src )				- (i)
+      procedure STRING 	api_OemToAnsi( STRING Src )				- (i)
+
+    enddef

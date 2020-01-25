@@ -1,0 +1,54 @@
+/*****************************************************************************
+
+		Copyright (c) 1989 - 1998 De Lint Associates
+
+ Project:  TASVPI
+ FileName: TASVOPG.PRE
+ Purpose: Predicate definitions for TASVOPG.PRO
+ Written by: JdL
+ Comments:
+******************************************************************************/
+
+%BEGIN_DECL, System generated global predicates
+GLOBAL PREDICATES
+  dlg_agenda_Create(WINDOW Parent, integer LijstOfEtiket) - (i, i)
+  dlg_onderdelen_select_Create(WINDOW Parent, string Titel, slist In, slist Out) - (i,i,i,o)
+  dlg_splitsen_Create(WINDOW Parent, wedscat W, wedscat U) - (i,i,o)
+  dlg_combineer_Create(WINDOW Parent, wedscat Catzelf, boolean Gedaan) - (i, i, o)
+  dlg_opgaven_Create(WINDOW Parent) - (i)
+%END_DECL
+procedure  banen_file(WINDOW, slist RapDagen,string PlanDag,string Filenaam,integer Form,catl Onderdelen,
+    BOOLEAN IVrijebanen, slist Locaties, Boolean Weblinks,integer FontGrootte)
+   - (i,i,i,i,i,i,i,i,i,i)
+
+%  agenda(integer Lijsttype) - (i)
+procedure dlg_opgaven_refresh(integer Mode) - (i)	% 0 is helemaal 1 = alleen namen
+determ  process(integer,integer,wedscat,integer,tgnst,rsoort) - (i,i,i,i,i,i)
+determ  upd_wd(integer, integer, wedscat, tgnst, rsoort) - (i,i,i,i,i)
+determ  selecteerKoppelBron(wedscat CatNo, integer Cursor, vandom Rang, wedscat CatVan) - (i,i,o,o)
+
+%determ  indeling(integer, integer) - (i,i)
+% determ  doeOpgave(WINDOW,integer, integer, integer) - (i,i,i,i)
+determ  combineer(WINDOW, wedscat, boolean) - (i, i, o)
+determ  rep_cat_opg(string, integer) - (i,i)
+procedure opgavenNaarSterkte(wedscat, integerlist) - (i, o)
+procedure  tgnst_naam(janee Omdraaien, boolean Voorletter, wedscat, tgnst, string, string Tel) - (i, i, i, i, o, o)
+%procedure removeDubl(slist, slist, slist) - (i, i, o)
+procedure  positionWC(wedscat, catl, catl) - (i, i, o)
+procedure  evenWegWC(catl, dbasedomlist)	- (i, o)
+procedure  sluitAanWC(dbasedomlist)		- (i)
+procedure  vrijeCatNummers(integer, wedscat, wedscat) - (i,i,o)
+determ  getInschrijf(slist) - (i)
+procedure setmarkH(tgnst, wedscat)  % dat ze gehandled zijn
+procedure checkAlOpgave(wedscat CatNo, tgnst) - (i, i)
+determ loadlineA(dbasedom, string Tid) - (i,i)
+procedure loadLineAcleanup()
+nondeterm koplInVolgorde(wedscat CatMaster, wedscat CatN) - (i,o)
+determ matchBovenleeftijd(integer,integer) - (i,i)
+procedure pouleLetter(integer N, string LetterS) - (i,o)  
+determ  edgmatch(wedstyp, wedstyp) - (i,i) % is nu enkel e en d
+
+
+
+
+

@@ -1,0 +1,67 @@
+/*****************************************************************************
+
+		Copyright (c) 1989 - 1998 De Lint Associates
+
+ Project:  TASVPI
+ FileName: TASVLOAD.PRE
+ Purpose: Predicate definitions for TASVLOAD.PRO
+ Written by: JdL
+ Comments:
+******************************************************************************/
+%include "tasvload.dom"
+
+GLOBAL PREDICATES
+restartlog(string Filenaam)
+%synchronizeWithLog() 
+spelers_invoer(WINDOW, integer Mode) - (i, i)	% 1 = astekol 2 = kommages 3 = dbf 4 = xml 5 = KNLTB
+clubs_invoer(WINDOW) - (i)
+procedure showfirst()	% 24.9.1999
+%BEGIN_DECL, System generated global predicates
+  dlg_backupselect_Create(WINDOW Parent) - (i)
+  dlg_toernooiselectie_Create(WINDOW Parent) - (i)
+  dlg_invoer_Create(WINDOW Parent, string Filenaam, integer Mode) - (i,i,i)
+  dlg_toernooiload_Create(WINDOW Parent, string Debug, boolean UploadIf, uploadtype) - (i, i, i, i)
+%%END_DECL
+%open_toernooi(WINDOW, integer, string SelectedDir) - (i, i, o)	% 1 = open, 2 = nieuw
+setNaam()				% set toernooinaam op taskwindow
+procedure cleantoernooinaam(string, string) - (i, o)
+check_leeft(integer, integer, string) 	% 24.9.1999 failt als leeft niet klopt
+check_sterk(string, string, string)	% 24.9.1999 failt als sterkte niet klopt
+myOpenRead(integer Retry, file, string Naam) - (i, i, i)
+myOpenAppend(file, string Naam) - (i, i)
+myOpenModify(file, string Naam) - (i, i)
+loglock(openhoe, string) - (i,i)
+procedure leeftijd(string Geb, integer, wedscat, paspoort) - (i, o, i, o)	
+leeftijdP(string, integer) - (i, o)	% failt niet maar geeft 0
+add_gebjr(string, string) - (i, o)
+lasttoken(string, string, string) - (i, o, o)
+
+procedure filter()
+nondeterm filtercheck(integer SpNo, string Naam) - (o, o)
+procedure back_up_auto() 
+procedure erIsGeupload()                       % in TASVP1
+existdir(string, string) - (i,o)
+dir_error(integer, BOOLEAN) - (i,i)
+met_bslash(string, string) - (i,o)
+procedure ontsleutel(sl, string)  - (i, o)
+procedure logleeg(long) - (i)
+procedure logf(char,dbasedom,janee) - (i,i,i)	% schrijf feiten naar de log file ja = keep open
+procedure doUpdateVensters()
+procedure copyNaarWebIf(string Map, lokatie, uploadtype) - (i, i, i)
+%procedure alsOverschrijven(string Folder, string Oudebestand, string FullNieuw) - (i,i,i)
+procedure reserveKopie(integer) - (i) % 1 = ja
+procedure getopeationeel(window) - (i)
+procedure dagstatusUploadX(string File, integer Dag) - (i,i)
+procedure string  getvpiini()
+procedure del_logX()
+determ string dlgFileNameZeker(string InitSelection,slist FileTypeFilters,string Title,ilist Flags,string StartPad,slist OutFiles) - (i,i,i,i,i,o) 
+procedure close_alles()
+%procedure leeftijd2Getal(string, integer) - (i,o)
+procedure getal2Leeftijd(integer, string) - (i,o)
+determ backupdirect()
+procedure selectjson(string) - (o)
+determ  introfromserver(string) - (o)
+procedure myDeletefile(string) - (i)
+
+
+

@@ -1,0 +1,79 @@
+/*****************************************************************************
+
+		Copyright (c) 1984 - 2000 Prolog Development Center A/S
+
+ Project:
+ FileName: APICALLS.DOM
+ Purpose: A Visual Prolog interface to OS API calls
+ Written by: Konstantin Ivanov & Compiler Group
+ Comments:
+******************************************************************************/
+
+ifndef ws_win
+  ifdef platform_32bit
+    ifndef os_os2
+      #error Unsupported platform
+    enddef
+  elsedef
+    #error Unsupported platform
+  enddef
+enddef
+ifndef types_dom_included
+  #Error types.dom must be included
+enddef
+
+ifndef apicalls_dom_included
+
+  constants
+
+    apicalls_dom_included = 1
+
+  global domains
+
+  ifndef pdcrunt_dom_included
+     OS_HANDLE = UNSIGNED	/* Handle of some OS object */
+  enddef
+
+  OS_HANDLE_LIST	= OS_HANDLE*
+  DWORD_LIST		= DWORD*
+  HKEY			= DWORD
+  API_HWND		= UNSIGNED
+
+  ifdef platform_32bit
+
+    global domains
+
+      ifndef pdcrunt_dom_included
+        OS_PROCESS_ID	= ULONG	/* Identifier of process     */
+        OS_THREAD_ID	= ULONG	/* Identifier of thread	     */
+        OS_EXIT_CODE	= ULONG	/* Process / thread exit code*/
+      enddef
+
+      FILETIME		= struct filetime ( DWORD LowDatetime,
+      					    DWORD HighDateTime
+      					  )
+      SYSTEMTIME	= struct systemtime ( WORD Year,
+					      WORD Month,
+					      WORD DayOfWeek,
+					      WORD Day,
+					      WORD Hour,
+					      WORD Minute,
+					      WORD Second,
+					      WORD Milliseconds
+					    )
+      OSVERSIONINFO	= struct osversioninfo ( DWORD OSVersionInfoSize,
+						 DWORD MajorVersion,
+						 DWORD MinorVersion,
+						 DWORD BuildNumber,
+						 DWORD PlatformId,
+						 STRING CSDVersion
+						)
+      LCID		= DWORD
+      LCTYPE		= DWORD
+      NUMBERFMT		= DWORD
+
+      CRITICAL_HANDLE	= ULONG
+
+  enddef	/* platform_32bit */
+
+enddef	/* apicalls_dom_included */

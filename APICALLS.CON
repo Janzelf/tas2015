@@ -1,0 +1,153 @@
+/*****************************************************************************
+
+		Copyright (c) 1984 - 2000 Prolog Development Center A/S
+
+ Project:
+ FileName: APICALLS.CON
+ Purpose: A Visual Prolog interface to OS API calls
+ Written by: Konstantin Ivanov & Compiler Group
+ Comments:
+******************************************************************************/
+
+ifndef ws_win
+  ifdef platform_32bit
+    ifndef os_os2
+      #error Unsupported platform
+    enddef
+  elsedef
+    #error Unsupported platform
+  enddef
+enddef
+
+  constants
+
+    apicalls_con_included = 1
+
+			/************************/
+			/* Names of API calls  */
+			/************************/
+  constants
+
+    ifdef os_os2
+
+    elsedef
+
+      ifdef platform_32bit
+
+	ifdef use_omf_objformat
+
+	  api_GetLastError_FNS			= "GetLastError"
+	  api_GetVersion_FNS			= "GetVersion"
+	  api_InitializeCriticalSection_FNS	= "InitializeCriticalSection"
+	  api_DeleteCriticalSection_FNS		= "DeleteCriticalSection"
+	  api_EnterCriticalSection_FNS		= "EnterCriticalSection"
+	  api_LeaveCriticalSection_FNS		= "LeaveCriticalSection"
+	  
+        elsedef
+
+	  api_GetLastError_FNS			= "_GetLastError"
+	  api_GetVersion_FNS			= "_GetVersion"
+	  api_InitializeCriticalSection_FNS	= "_InitializeCriticalSection"
+	  api_DeleteCriticalSection_FNS		= "_DeleteCriticalSection"
+	  api_EnterCriticalSection_FNS		= "_EnterCriticalSection"
+	  api_LeaveCriticalSection_FNS		= "_LeaveCriticalSection"
+	  
+        enddef
+
+      elsedef
+
+	  api_GetVersion_FNS		= "GETVERSION"
+
+      enddef
+
+    enddef
+
+      api_HKEY_CLASSES_ROOT		= 0x80000000
+      api_HKEY_CURRENT_USER		= 0x80000001
+      api_HKEY_LOCAL_MACHINE 		= 0x80000002
+      api_HKEY_USERS			= 0x80000003
+      api_HKEY_PERFORMANCE_DATA		= 0x80000004
+
+      api_MAX_PATH			= 260
+
+      api_HInstance_error		= 32
+
+      api_SW_HIDE			= 0
+      api_SW_SHOWNORMAL			= 1
+      api_SW_NORMAL			= 1
+      api_SW_SHOWMINIMIZED		= 2
+      api_SW_SHOWMAXIMIZED		= 3
+      api_SW_MAXIMIZE			= 3
+      api_SW_SHOWNOACTIVATE		= 4
+      api_SW_SHOW			= 5
+      api_SW_MINIMIZE			= 6
+      api_SW_SHOWMINNOACTIVE		= 7
+      api_SW_SHOWNA			= 8
+      api_SW_RESTORE			= 9
+      api_SW_SHOWDEFAULT		= 10
+      api_SW_MAX			= 10
+
+
+    ifdef os_nt
+
+      api_invalid_handle 		= 0xFFFFFFFF
+      api_infinite			= 0xFFFFFFFF
+      api_thread_priority_error_return	= 0x7fffFFFF
+      api_thread_priority_above_normal	= 1	 	% Indicates 1 point above normal priority for the priority class.
+      api_thread_priority_below_normal	= -1	 	% Indicates 1 point below normal priority for the priority class.
+      api_thread_priority_highest	= 2	 	% Indicates 2 points above normal priority for the priority class.
+      api_thread_priority_idle	   	= -15 		% Indicates a base-priority level of 1 for IDLE_PRIORITY_CLASS, NORM
+      api_thread_priority_lowest	= -2	 	% Indicates 2 points below normal priority for the priority class.
+      api_thread_priority_normal	= 0	 	% Indicates normal priority for the priority class.
+      api_thread_priority_time_critical	= 15	 	% Indicates a base-priority level of 15 for IDLE_PRIORITY_CLASS, NORMAL_PRIORITY_CLASS, or HIGH_PRIORITY_CLASS processes, and a base-priority level of 31 for REALTIME_PRIORITY_CLASS processes.
+
+      api_wait_failed			= 0xFFFFFFFF
+      api_wait_abandoned		= 0x00000080
+      api_wait_abandoned_0		= 0x00000080
+      api_wait_object_0			= 0x00000000
+      api_wait_timeout			= 0x00000102
+
+      api_Std_Input_Handle		= 0xFFFFFFF6
+      api_Std_Output_Handle		= 0xFFFFFFF5
+      api_Std_Error_Handle		= 0xFFFFFFF4
+
+      api_eventlog_success		= 0x0000
+      api_eventlog_error_type		= 0x0001
+      api_eventlog_warning_type		= 0x0002
+      api_eventlog_information_type	= 0x0004
+      api_eventlog_audit_success	= 0x0008
+      api_eventlog_audit_failure	= 0x0010
+
+      api_file_notify_change_file_name	= 0x00000001
+      api_file_notify_change_dir_name	= 0x00000002
+      api_file_notify_change_attributes	= 0x00000004
+      api_file_notify_change_size	= 0x00000008
+      api_file_notify_change_last_write	= 0x00000010
+      api_file_notify_change_last_access= 0x00000020
+      api_file_notify_change_creation	= 0x00000040
+      api_file_notify_change_security	= 0x00000100
+
+      api_cp_acp			= 0		/* default to ANSI code page */
+      api_cp_maccp			= 1		/* default to OEM  code page */
+      api_cp_oemcp			= 2		/* default to MAC  code page */
+      api_MB_PRECOMPOSED		= 0x00000001	/* use precomposed chars */
+      api_MB_COMPOSITE			= 0x00000002	/* use composite chars */
+      api_MB_USEGLYPHCHARS		= 0x00000004	/* use glyph chars, not ctrl chars */
+      api_MB_ERR_INVALID_CHARS		= 0x00000008	/* error for invalid chars */
+      api_WC_DEFAULTCHECK		= 0x00000100	/* check for default char */
+      api_WC_DISCARDNS			= 0x00000010	/* discard non-spacing chars */
+      api_WC_SEPCHARS			= 0x00000020	/* generate separate chars */
+      api_WC_DEFAULTCHAR		= 0x00000040	/* replace w/ default char */
+
+      api_VER_PLATFORM_WIN32s		= 0
+      api_VER_PLATFORM_WIN32_WINDOWS	= 1
+      api_VER_PLATFORM_WIN32_NT		= 2
+
+      api_LOCALE_NOUSEROVERRIDE		= 0x80000000	/* see more constants in winnls.h */
+      api_LOCALE_USER_DEFAULT		= 0x400
+      api_LOCALE_SYSTEM_DEFAULT		= 0x800
+
+      api_LOCALE_SDECIMAL		= 0xe		/* character(s) used as the decimal separator */
+      api_LOCALE_IDIGITS		= 0x11		/* number of fractional digits */
+
+    enddef

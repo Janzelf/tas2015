@@ -1,0 +1,469 @@
+/*****************************************************************************
+
+		Copyright (c) 1989 - 2000 De Lint Associates
+
+ Project:  TASVP1
+ FileName: TASAPI.PRE
+ Purpose: Predicate definitions for TASAPI.PRO
+ Written by: JdL
+ Comments:
+******************************************************************************/
+
+
+ifndef apicomm_con_included
+
+CONSTANTS
+
+  apicomm_con_included = 1
+
+CONSTANTS
+
+  api_ev_rxchar     = 1
+  api_ev_rxflag	    = 2
+  api_ev_txempty    = 4
+  api_generic_read  = 0x80000000
+  api_generic_write = 0x40000000
+  api_open_existing = 3
+
+  api_file_attribute_normal	= 0x80
+  api_file_flag_write_through	= 0x80000000
+  api_file_flag_overlapped	= 0x40000000
+  api_file_share_read		= 0x1
+  api_file_share_write		= 0x2
+
+  api_error_IO_pending		= 997
+  api_still_active		= 0x103
+
+  api_purge_txabort	= 1	% Kill the pending/current writes to the comm port.
+  api_purge_rxabort	= 2	% Kill the pending/current reads to the comm port.
+  api_purge_txclear	= 4	% Kill the transmit queue if there.
+  api_purge_rxclear	= 8	% Kill the typeahead buffer if there.
+  
+  api_create_suspended	= 4
+
+  % DCB flags first byte
+  api_binary			=   1	% binary mode (skip EOF check)
+  api_parity			=   2 	% enable parity checking
+  api_outxCtsFlow		=   4	% CTS handshake on output	*
+  api_outxDsrFlow		=   8	% DSR handshake on output
+  api_outxFlowMask		=  12	% 4 + 8
+  api_dtrControl_disable	=   0	% 0
+  api_dtrControl_enable		=  16	% 1
+  api_dtrControl_handshake	=  32	% 2
+  api_dtrControlMask		=  48	% 3
+  api_dsrSensitivity		=  64
+  api_txContinueOnXoff		= 128
+  % second byte
+  api_xonXoffOut		=  0x100	% enable output XON/XOFF
+  api_xonXoffIn			=  0x200	% enable  input XON/XOFF
+  api_errorChar			=  0x400	% enable error replacement
+  api_stripNull			=  0x800	% enable Null stripping		*
+  % api_stripNull =  0	% test purpose
+  api_rtsControl_disable	=      0
+  api_rtsControl_enable		= 0x1000
+  api_rtsControl_handshake	= 0x2000
+  api_rtsControl_toggle		= 0x3000
+  api_rtsControlMask		= 0x3000
+  api_AbortOnError		= 0x4000
+  % 17 more dummy bits in dword flags
+
+  % global API definition - no extra prolog interface
+  api_ReadFile_FNS 		= "ReadFile"
+  api_WriteFile_FNS 		= "WriteFile"
+  api_WaitCommEvent_FNS		= "WaitCommEvent"
+  api_GetDefaultCommConfig_FNS	= "GetDefaultCommConfigA"
+  api_CommConfigDialog_FNS	= "CommConfigDialogA"
+  api_GetCurrentThread_FNS	= "GetCurrentThread"
+  api_ExitThread_FNS		= "ExitThread"
+
+% all routines with a prolog interface
+  api_CreateFile_FNS		= "CreateFileA"
+  api_CreateThread_FNS		= "CreateThread"
+  api_CreateMutex_FNS		= "CreateMutexA"
+  api_ReleaseMutex_FNS		= "ReleaseMutex"
+  api_SetDefaultCommConfig_FNS	= "SetDefaultCommConfigA"
+  api_SetCommState_FNS		= "SetCommState"
+  api_GetCommState_FNS		= "GetCommState"
+  api_GetCommMask_FNS		= "GetCommMask"
+  api_SetCommMask_FNS		= "SetCommMask"
+  api_SetCommTimeouts_FNS	= "SetCommTimeouts"
+  api_ClearCommError_FNS	= "ClearCommError"
+  api_PurgeComm_FNS		= "PurgeComm"
+  api_GetOverlappedResult_FNS	= "GetOverlappedResult"
+
+enddef	% apicomm_con_included
+
+
+ifndef apicomm_dom_included
+
+CONSTANTS
+
+  apicomm_dom_included = 1
+
+global DOMAINS
+
+  functionAddress = procedure (string) - (i)
+%  refUlong = reference ulong
+
+  DCB = struct align byte dcb(	% dcb
+	DWORD DCBlength,	% sizeof(DCB) - number of elements
+	DWORD BaudRate,		% current baud rate
+	DWORD Flags,
+/*	DWORD fBinary:1,	   % binary mode, no EOF check
+	DWORD fParity:1,	   % enable parity checking
+	DWORD fOutxCtsFlow:1,	   % CTS output flow control
+	DWORD fOutxDsrFlow:1,	   % DSR output flow control
+	DWORD fDtrControl:2, 	   % DTR flow control type
+	DWORD fDsrSensitivity:1,   % DSR sensitivity
+	DWORD fTXContinueOnXoff:1, % XOFF continues Tx
+
+	DWORD fOutX:1,		% XON/XOFF out flow control
+	DWORD fInX:1,		% XON/XOFF in flow control
+	DWORD fErrorChar:1,	% enable error replacement
+	DWORD fNull:1,		% enable null stripping
+	DWORD fRtsControl:2,	% RTS flow control
+	DWORD fAbortOnError:1,	% abort reads/writes on error
+	DWORD fDummy2:17,	% reserved
+*/
+	WORD wReserved,		% not currently used
+	WORD XonLim,		% transmit XON threshold
+
+	WORD XoffLim,		% transmit XOFF threshold
+	BYTE ByteSize,		% number of bits/byte, 4-8
+	BYTE Parity,		% 0-4 = no,odd,even,mark,space
+	BYTE StopBits,		% 0,1,2 = 1, 1.5, 2
+	char XonChar,		% Tx and Rx XON character
+	char XoffChar,		% Tx and Rx XOFF character
+	char ErrorChar,		% error replacement character
+	char EofChar,		% end of input character
+	char EvtChar,		% received event character
+
+	WORD wReserved1)	% reserved; do not use
+
+  commConfig = struct align byte api_CommConfig(
+	DWORD dwSize,
+	WORD  wVersion,
+	WORD  wReserved,
+%	binary dcb_and_other)
+	DCB   dcb,
+	DWORD dwProviderSubType,
+	DWORD dwProviderOffset,
+	DWORD dwProviderSize,
+	string wcProviderData)	% WCHAR
+
+  overlapped = struct align byte api_overlapped(
+	dword	Internal,
+	dword	InternalHigh,
+	dword	Offset,
+	dword	OffsetHigh,
+	OS_Handle hevent)
+
+  securityDescriptor = ulong
+
+  security_attributes = struct align byte api_securityAttributes(
+	dword	NLength,
+	securityDescriptor,
+	boolean InheritHandle)
+
+  commTimeouts = struct align byte api_CommTimeouts(	% ctmo 
+    dword ReadIntervalTimeout,
+    dword ReadTotalTimeoutMultiplier,
+    dword ReadTotalTimeoutConstant,
+    dword WriteTotalTimeoutMultiplier,
+    dword WriteTotalTimeoutConstant)
+
+  commStat = struct align byte api_CommStat(
+	dword Flags,
+%	  CtsHold,DsrHold,RlsdHold,XoffHold,XoffSend,Eof,Txim,Reserved,
+	dword CbInQueue,
+	dword CbOutQueue)
+
+  size = struct align byte api_size(dword)
+
+%  overlapped_or_null = o(overlapped); u(ulong)
+
+enddef	% apicomm_dom_included
+
+ifndef ws_win
+  ifdef platform_32bit
+    ifndef os_os2
+      #error Unsupported platform
+    enddef
+  elsedef
+    #error Unsupported platform
+  enddef
+enddef
+
+ifndef apicomm_con_included
+  #Error apicomm.con must be included
+enddef
+
+ifndef apicomm_dom_included
+  #Error apicomm.dom must be included
+enddef
+
+ifndef apicomm_pre_included
+
+CONSTANTS
+
+  apicomm_pre_included = 1
+
+GLOBAL PREDICATES
+
+  % api functions with exact call of WIN32-API (only name translation)
+  % _FNS names defined in apicomm.con
+  procedure boolean api_ReadFileAsync(OS_Handle,string,dword StrLen,dword RecLen,overlapped)
+		- (i,i,i,o,i) language stdcall as api_ReadFile_FNS
+										% dword 
+  procedure boolean api_WriteFileAsync(OS_Handle,string,dword StrLen,dword RecLen,overlapped)
+		- (i,i,i,o,i) language stdcall as api_WriteFile_FNS
+
+  procedure boolean api_WaitCommEvent(OS_Handle,dword EventMask,overlapped)
+		- (i,o,i) language stdcall as api_WaitCommEvent_FNS
+
+  procedure boolean api_ExitThread(dword ExitCode) - (i) language stdcall as api_ExitThread_FNS
+
+  procedure OS_Handle api_GetCurrentThread() language stdcall as api_GetCurrentThread_FNS
+
+  procedure boolean api_GetDefaultCommConfig(string,binary CommConfig,size)
+		- (i,i,i) language stdcall as api_GetDefaultCommConfig_FNS
+
+  procedure boolean api_CommConfigDialog(string,api_HWnd,binary)
+		- (i,i,i) language stdcall as api_CommConfigDialog_FNS
+
+  % API calls with prolog interface
+  procedure OS_Handle api_CreateFile(string FileName,dword DesiredAccess,dword ShareMode,
+		dword SecurityAttributes,dword CreationDistribution,
+		dword FlagsAndAttributes,OS_Handle TemplateFile) - (i,i,i,i,i,i,i)
+
+  procedure api_ReadFileSync(OS_Handle,string,dword StrLen,dword RecLen)
+		- (i,i,i,o)
+
+  procedure api_WriteFileSync(OS_Handle,string,dword StrLen,dword RecLen)
+		- (i,i,i,o)
+
+  procedure OS_Handle api_CreateThread(dword SecurityAttributes,dword StackSize,
+		functionAddress StartAdr,dword Parameter,dword Flags,OS_THREAD_ID ThreadID)
+		- (i,i,i,i,i,o)
+
+  procedure OS_Handle api_CreateMutex(dword SecurityAttributes,boolean InitialOwner,
+		string MutexName) - (i,i,i)
+  procedure api_ReleaseMutex(OS_Handle) - (i)
+
+  procedure api_SetDefaultCommConfig(string,binary LpCC,dword Size) - (i,i,i)
+
+  procedure api_SetCommState(OS_Handle HComm,dcb CommDCB) - (i,i)
+  procedure api_GetCommState(OS_Handle HComm,dcb CommDCB) - (i,o)
+  procedure api_GetCommMask(OS_Handle,dword Mask) - (i,o)
+  procedure api_SetCommMask(OS_Handle,dword Mask) - (i,i)
+
+  procedure api_SetCommTimeouts(OS_Handle,commTimeouts TimeOuts) - (i,i)
+  procedure api_ClearCommError(OS_Handle,dword Error,commStat) - (i,o,o)
+  procedure api_PurgeComm(OS_Handle,dword Mode)	- (i,i)
+  procedure api_GetOverlappedResult(OS_Handle,overlapped,dword Number,boolean WaitNowait)
+		- (i,i,o,i)
+
+enddef % apicomm_pre_included
+
+ifndef ws_win
+  #error Unsupported platform
+enddef
+
+ifndef smapi_con_included
+
+  constants
+
+    smapi_con_included = 1
+
+			/************************/
+			/* Names of API calls  */
+			/************************/
+  constants
+
+    sMAPI_ORIG				= 0           /* Recipient is message originator          */
+    sMAPI_TO				= 1           /* Recipient is a primary recipient         */
+    sMAPI_CC				= 2           /* Recipient is a copy recipient            */
+    sMAPI_BCC				= 3           /* Recipient is blind copy recipient        */
+
+    sMAPI_OLE 				= 0x00000001
+    sMAPI_OLE_STATIC 			= 0x00000002
+
+    sMAPI_UNREAD 			= 0x00000001
+    sMAPI_RECEIPT_REQUESTED 		= 0x00000002
+    sMAPI_SENT				= 0x00000004
+
+    sMAPI_LOGON_UI			= 0x00000001  /* Display logon UI             */
+    sMAPI_NEW_SESSION			= 0x00000002  /* Don't use shared session     */
+    sMAPI_PASSWORD_UI			= 0x00020000  /* prompt for password only     */
+    sMAPI_FORCE_DOWNLOAD		= 0x00001000  /* Get new mail before return   */
+    sMAPI_EXTENDED			= 0x00000020  /* Extended MAPI Logon          */
+      
+    sMAPI_DIALOG			= 0x00000008  /* Display a send note UI       */
+  
+    sMAPI_UNREAD_ONLY			= 0x00000020  /* Only unread messages         */
+    sMAPI_GUARANTEE_FIFO		= 0x00000100  /* use date order               */
+    sMAPI_LONG_MSGID			= 0x00004000  /* allow 512 char returned ID   */
+      
+    sMAPI_PEEK 				= 0x00000080  /* Do not mark as read.         */
+    sMAPI_SUPPRESS_ATTACH		= 0x00000800  /* header + body, no files      */
+    sMAPI_ENVELOPE_ONLY			= 0x00000040  /* Only header information      */
+    sMAPI_BODY_AS_FILE			= 0x00000200
+
+    sMAPI_AB_NOMODIFY 			= 0x00000400  /* Don't allow mods of AB entries */
+
+    sMAPI_SUCCESS_SUCCESS		= 0
+    sMAPI_E_USER_ABORT			= 1
+    sMAPI_E_FAILURE			= 2
+    sMAPI_E_LOGON_FAILURE		= 3
+    sMAPI_E_LOGIN_FAILURE		= sMAPI_E_LOGON_FAILURE
+    sMAPI_E_DISK_FULL			= 4
+    sMAPI_E_INSUFFICIENT_MEMORY		= 5
+    sMAPI_E_ACCESS_DENIED		= 6
+    sMAPI_E_TOO_MANY_SESSIONS		= 8
+    sMAPI_E_TOO_MANY_FILES		= 9
+    sMAPI_E_TOO_MANY_RECIPIENTS		= 10
+    sMAPI_E_ATTACHMENT_NOT_FOUND	= 11
+    sMAPI_E_ATTACHMENT_OPEN_FAILURE	= 12
+    sMAPI_E_ATTACHMENT_WRITE_FAILURE	= 13
+    sMAPI_E_UNKNOWN_RECIPIENT		= 14
+    sMAPI_E_BAD_RECIPTYPE		= 15
+    sMAPI_E_NO_MESSAGES			= 16
+    sMAPI_E_INVALID_MESSAGE		= 17
+    sMAPI_E_TEXT_TOO_LARGE		= 18
+    sMAPI_E_INVALID_SESSION		= 19
+    sMAPI_E_TYPE_NOT_SUPPORTED		= 20
+    sMAPI_E_AMBIGUOUS_RECIPIENT		= 21
+    sMAPI_E_MESSAGE_IN_USE		= 22
+    sMAPI_E_NETWORK_FAILURE		= 23
+    sMAPI_E_INVALID_EDITFIELDS		= 24
+    sMAPI_E_INVALID_RECIPS		= 25
+    sMAPI_E_NOT_SUPPORTED		= 26
+
+enddef
+ifndef ws_win
+  #error Unsupported platform
+enddef
+
+ifndef ws_win
+  #error Unsupported platform
+enddef
+
+ifndef smapi_dom_included
+
+  constants
+
+    smapi_dom_included = 1
+
+  global domains
+  
+ifndef pdcrunt_dom_included
+	
+    OS_HANDLE		= UNSIGNED		/* Handle of some OS object */
+    
+enddef    
+ifndef apicalls_dom_included
+
+     DWORD_LIST 	= DWORD*    
+
+enddef
+
+    LHANDLE		= ULONG
+    MAPIRECIPDESC_ARRAY	= BINARY
+    MAPIRECIPDESC_LIST	= MAPIRECIPDESC*
+    MAPIFILEDESC_ARRAY	= BINARY
+    MAPIFILEDESC_LIST	= MAPIFILEDESC*
+    MAPINAMEADDR_LIST   = MAPINAMEADDR*
+    MAPIMESSAGE		= struct mapimessage(	ULONG Reserved,
+						STRING Subject,
+     						STRING NoteText,
+						STRING MessageType,
+     						STRING DateReceived,
+						STRING ConversationID,
+						ULONG Flags,						%????
+						MAPIRECIPDESC_ARRAY Originator,	% only one originator or NULL
+						ULONG RecipCount,
+						MAPIRECIPDESC_ARRAY Recips,
+						ULONG FileCount,
+						MAPIFILEDESC_ARRAY Files
+      						)
+   MAPIRECIPDESC	= struct mapirecipdesc( ULONG Reserved,
+						ULONG RecipClass,
+						STRING Name,
+						STRING Address,
+						ULONG EIDSize,
+						BINARY EntryID
+						)
+   MAPIFILEDESC		= struct mapifiledesc( ULONG Reserved,
+					       ULONG Flags,
+					       ULONG Position,
+					       STRING PathName,
+					       STRING FileName,
+					       BINARY FileType
+					       )
+   MAPINAMEADDR         = struct mapinameaddr( STRING Name,
+                                               STRING Address
+                                               )
+
+enddef	/* smapi_dom_included */
+ifndef ws_win
+  #error Unsupported platform
+enddef
+
+ifndef smapi_dom_included
+  #Error : smapi.dom must be included
+enddef
+ifndef smapi_con_included
+  #Error : smapi.con must be included
+enddef
+
+ifndef smapi_pre_included
+
+  constants
+
+    smapi_pre_included = 1
+
+  global predicates
+
+    %Common predicates
+    procedure		sMAPI_Init()
+    procedure		sMAPI_Terminate()	%MUST BE CALLED
+
+    %Conversion predicates
+    procedure		sMAPI_ConvRecipDesc_Array( MAPIRECIPDESC_LIST Descriptions, MAPIRECIPDESC_ARRAY,
+     						     UNSIGNED RecipCount) 		- (i,o,o), (o,i,i)
+    procedure		sMAPI_ConvFileDesc_Array( MAPIFILEDESC_LIST Descriptions, MAPIFILEDESC_ARRAY,
+     						     UNSIGNED FileCount)		- (i,o,o), (o,i,i)
+
+    % Simple MAPI predicates
+    procedure	ULONG	sMAPI_SendMail( LHANDLE SessionHandle, ULONG WindowHandle, MAPIMESSAGE Message,
+     					  DWORD_LIST Flags ) 				- (i,i,i,i)
+    procedure	ULONG	sMAPI_Address( LHANDLE SessionHandle, ULONG WindowHandle, STRING Caption, 
+					 ULONG EditFields, STRING Labels, ULONG Recips,
+					 MAPIRECIPDESC_ARRAY Recips, DWORD_LIST Flags, ULONG RecipsCount,
+					 MAPIRECIPDESC_ARRAY Recips) 			- (i,i,i,i,i,i,i,i,o,o)
+    procedure	ULONG	sMAPI_DeleteMail( LHANDLE SessionHandle, ULONG WindowHandle,
+     					    STRING MesageID ) 				- (i,i,i)
+    procedure 	ULONG	sMAPI_Details( LHANDLE SessionHandle, ULONG WindowHandle, MAPIRECIPDESC RecipDesc, 
+     					 DWORD_LIST Flags)				- (i,i,i,i)
+    procedure  ULONG	sMAPI_FindNext( LHANDLE SessionHandle, ULONG WindowHandle, STRING MessageType, 
+     					  STRING SeedMessageID, DWORD_LIST Flags, 
+     					  STRING MessageID ) 				- (i,i,i,i,i,o)
+    procedure	ULONG	sMAPI_Logoff( LHANDLE SessionHandle, ULONG WindowHandle )	- (i,i)
+    procedure	ULONG	sMAPI_Logon( ULONG WindowHandle, STRING ProfileName, STRING Password, 
+				       DWORD_LIST Flags, LHANDLE SessionHandle )	- (i,i,i,i,o)
+    procedure	ULONG	sMAPI_ReadMail( LHANDLE SessionHandle, ULONG WindowHandle, STRING MessageID, 
+     					  DWORD_LIST Flags, MAPIMESSAGE Message )	- (i,i,i,i,o)
+    procedure	ULONG	sMAPI_ResolveName( LHANDLE SessionHandle, ULONG WindowHandle, STRING Name,
+    					     DWORD_LIST Flags, MAPIRECIPDESC RecipDesc ) - (i,i,i,i,o)
+    procedure	ULONG	sMAPI_SaveMail( LHANDLE SessionHandle, ULONG WindowHandle, MAPIMESSAGE Message,
+     					  DWORD_LIST Flags, STRING MessageID )		- (i,i,i,i,i), (i,i,i,i,o)		% output - for save new mail
+    procedure	ULONG	sMAPI_SendDocuments( ULONG WindowHandle, STRING DelimChar, 
+     					       SLIST FullPaths, SLIST FileNames )	- (i,i,i,i)
+     					       
+    %Simplified version of sMAPI_SendMail - exits with an error if a return code of the sMAPI_SendMail is other than sMAPI_SUCCESS_SUCCESS
+    procedure		sMAPI_SendMailMessage( MAPINAMEADDR_LIST To_addresses, MAPINAMEADDR_LIST CC_addresses, MAPINAMEADDR_LIST BCC_addresses,
+    					      STRING Subject, STRING MessageText )	- (i,i,i,i,i)
+	% 21.12.2002
+    procedure	form_Recips( MAPIRECIPDESC_LIST, MAPINAMEADDR_LIST, ULONG, MAPIRECIPDESC_LIST )	- (i,i,i,o)
+     
+enddef

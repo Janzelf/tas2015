@@ -1,0 +1,31 @@
+/*****************************************************************************
+
+               Copyright (c) 1984 - 2000 Prolog Development Center A/S
+
+ FileName:	DATE.DOM
+ Purpose:	Date and Time format handling. Global domains declaration.
+ Written by:	Alexander Butovsky
+ Version:	1.0
+ Build:		012.990119
+ Tested with:   Visual Prolog v.5.1 build 555a
+ Comments:
+******************************************************************************/
+
+constants
+  date_dom_included = 1
+
+global domains
+  DATE_OFFSET   = ULONG 
+  TIME_OFFSET   = UNSIGNED
+  MINUT_OFFSET  = ULONG % date in mins since 1/1-1
+
+  DATE_OFFSETLIST =   DATE_OFFSET*
+
+  DT_START_END = start;
+		 end
+
+constants
+  dt_mins_in_hour =	60
+  dt_mins_in_week =	10080
+  dt_mins_in_day  =	1440
+

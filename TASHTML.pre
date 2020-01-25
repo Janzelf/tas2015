@@ -1,0 +1,36 @@
+/*****************************************************************************
+
+		Copyright (c) 1989 - 2005 De Lint Associates
+
+ Project:  TASVP1
+ FileName: TASHTML.PRE
+ Purpose: Predicate definitions for TASHTML.PRO
+ Written by: JdL
+ Comments:
+******************************************************************************/
+
+global predicates 
+procedure publiceerSpelerProgramma(shselect SheetSel, boolean, catl WasSlist, integer, string CSSnaam, boolean ZonderWebLink) - (i,i,i,i,i,i)
+procedure agendaref(shselect SheetSel, integer, boolean) - (i,i,i)
+procedure spagendaref(shselect SheetSel, integer, boolean) - (i,i,i)
+procedure publiceerOverzicht(shselect SheetSel/*, boolean*/, catl, string CSS, boolean ZonderLinks, string Mededeling) - (i, i, i, i, i)
+procedure finalepagina(shselect SheetSel, catl, string, boolean ZonderLinks, string Mededeling, boolean MetSpeelsterkte) - (i, i, i, i, i, i)
+procedure resetspelerprogramma()
+nondeterm sluitenMaarAgenda(shselect ShSelect, boolean ZonderWebLinks, catl) - (i,i,i)
+determ    eenagendaitem()
+nondeterm agendaitemStr(string Dag, integer Reekshoofd) - (o, i)
+%procedure checkStyleSheet(boolean ZonderWebLinks, string FileNaam, integer FontGr) - (i,i,i)
+determ    finaleBekend(boolean)  - (o) 
+procedure finalesAfdruk()
+procedure toernooidiv()
+procedure generateHTML(beeld, catl) - (i,i)
+procedure outHTML(beeld, catl, boolean Noshow) - (i,i,i)
+procedure maakMijnlink(string, string, string) - (i,i,o)
+procedure tracezelf(string) - (i)
+procedure copyright()
+procedure editie()
+procedure zonderHekje(string,string, string) - (i,i, o)
+
+
+
+

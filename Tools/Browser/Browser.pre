@@ -1,0 +1,129 @@
+/*****************************************************************************
+
+		Copyright (c)2000 Prolog Development Center A/S
+
+ Project:	Web Browser tool
+ FileName:	Browser.pre
+ Purpose:	Declaration of calls to Web Browser
+ Written by:	Alexander Butovsky
+ Date:		25.08.2000
+ Tested with:	Visual Prolog 5.2 build 594
+ Comments:
+
+******************************************************************************/
+constants
+  web_browser_class_name = "web_browser"
+
+global predicates
+/*****************************************************************************
+  browser_Register/0 -  register custom control class and dynamically load Web 
+			Browser layer dll
+
+	Returns: b_true  if dll loading successfull
+		 b_false if dll loading failed
+	Note:    Call to this predicate should be placed in Task window
+		 e_Create event handler. This will guarantee that registration
+		 will occure only once.
+*****************************************************************************/
+  boolean browser_Register() - procedure ()
+
+/*****************************************************************************
+  browser_Unregister/0 - unregister custom control class and close Web Browser 
+			 layer dll
+
+	Note:    Call to this predicate should be placed in Task window
+		 e_Destroy event handler. This will guarantee that 
+		 unloading will occure only once.
+*****************************************************************************/
+  browser_Unregister() - procedure ()
+
+/*****************************************************************************
+  browser_OpenURL/2 - display web document in browser
+
+	Arguments: Browser - Web Browser custom control window
+		   URL     - String representing the address of the document
+		   	     to be shown in URL format.
+*****************************************************************************/
+  browser_OpenURL(window Browser,string URL) - procedure (i,i)
+
+
+/*****************************************************************************
+  browser_Back/1 - display previous document in history list
+
+	Arguments: Browser - Web Browser custom control window
+	Note:      If previous document in the history list doesn't exist
+		   predicate does nothing.
+*****************************************************************************/
+  browser_Back(window Browser) - procedure (i)
+
+/*****************************************************************************
+  browser_Stop/1 - stops opening a file
+
+	Arguments: Browser - Web Browser custom control window
+	Note:      Stops opening a file.
+*****************************************************************************/
+  browser_Stop(window Browser) - procedure (i)
+
+/*****************************************************************************
+  browser_Forward/1 - display next document in history list
+
+	Arguments: Browser - Web Browser custom control window
+	Note:      If the next document in the history list doesn't exist
+		   predicate does nothing.
+*****************************************************************************/
+  browser_Forward(window Browser) - procedure (i)
+
+
+/*****************************************************************************
+  browser_Reload/1 - force browser to reload current document
+
+	Arguments: Browser - Web Browser custom control window
+*****************************************************************************/
+  browser_Reload(window Browser) - procedure (i)
+
+
+/*****************************************************************************
+  browser_Home/1 - force browser to display default document
+
+	Arguments: Browser - Web Browser custom control window
+*****************************************************************************/
+  browser_Home(window Browser) - procedure (i)
+
+/*****************************************************************************
+  browser_GetLocationURL/1 - return current web document URL
+
+	Arguments: Browser - Web Browser custom control window
+*****************************************************************************/
+  string /*URL*/ browser_GetLocationURL(window Browser) - procedure (i)
+
+/*****************************************************************************
+  browser_GetLocationName/1 - return current web document Name
+
+	Arguments: Browser - Web Browser custom control window
+*****************************************************************************/
+  string /*Name*/ browser_GetLocationName(window Browser) - procedure (i)
+
+/*****************************************************************************
+  browser_GetPath/1 - return the path to the container application using Web
+  		      Browser custom control
+
+	Arguments: Browser - Web Browser custom control window
+*****************************************************************************/
+  string /*Path*/ browser_GetPath(window Browser) - procedure (i)
+
+/*****************************************************************************
+  browser_GetFullName/1 - return the full name (including path) of the contai-
+			  ner application using Web Browser custom control.
+
+	Arguments: Browser - Web Browser custom control window
+*****************************************************************************/
+  string /*FullName*/ browser_GetFullName(window Browser) - procedure (i)
+
+/*****************************************************************************
+  browser_Print/1 - print content of the contai-
+			  ner application using Web Browser custom control.
+
+	Arguments: Browser - Web Browser custom control window
+*****************************************************************************/
+  browser_Print(window Browser, integer Cmd) - procedure (i,i)
+

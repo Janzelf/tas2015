@@ -1,0 +1,117 @@
+/*****************************************************************************
+
+		Copyright (c) 1989 - 1998 De Lint Associates
+
+ Project:  TASVPI
+ FileName: TASUITSL.PRE
+ Purpose: Predicate definitions for TASUITSL.PRO
+ Written by: JdL
+ Comments:
+******************************************************************************/
+
+Global predicates
+
+%uitsl_verwrk()
+uitsl_verwrk(WINDOW) - (i)
+procedure close_uitslaginv()
+procedure close_waarsch()
+procedure update_waarsch()
+procedure  update_uitslagen(string) - (i)
+procedure uitslagen_top()
+procedure update_planinvoer()
+
+%BEGIN_DECL, System generated global predicates
+GLOBAL PREDICATES
+  win_uitslageninvoer_Create(WINDOW Parent, integer Mode, wedscat Poule) - (i, i, i)	% 0 = te plannen 1 = alle 2 = uitslagen 3 = Poule
+  dlg_vervolgpartij_Create(janee Inform, WINDOW Parent, integer No, wedscat Cat, string Titel, janee Gewaarsch, integer LR, integer Return, boolean Slave) - (i,i,i,i,i,i,i,o,i)
+  win_waarschuwinvoer_Create(WINDOW Parent, ilist SpelerslijstVoorselectie) - (i,i)
+  dlg_plaatsing_Create(WINDOW Parent, wedscat, integer EersteIndex)  - (i,i,i)
+  dlg_plaatsing1_Create(WINDOW Parent, integer Num, wedscat Cat,tgnst,integer,integer,integer,integer,string,
+  integer,integer,integer,integer,integer,string, integer Resultaat, integer Eerstefocus) - (i,i,i,i,i,i,i,i,i,o,o,o,o,o,o,o,i)
+  dlg_uitslaginvoer1_Create(WINDOW Parent, integer No, wedscat Cat, boolean MetAanwezigheidsRegistratie) - (i,i,i,i)
+  %dlg_onderdeelplan_Create(WINDOW Parent, string Onderdeel) - (i,i)
+  tb_informeren_Create(WINDOW Parent) - (i)
+  dlg_plangegevens_Create(oprafztype,WINDOW Parent, string Titel, tgnst, integer, wedscat, integer Result, boolean Slave) - (i,i,i,i,i,i,o,i)
+  dlg_gewaarschuwd_Create(WINDOW Parent,string Winnaars, integer Num, wedscat Cat, integer OE) - (i,i,i,i,i)
+  tb_uitslagen_Create(WINDOW Parent) - (i)
+  %dlg_oproepen_per_email_Create(WINDOW Parent, integer Persoon) - (i,i)
+  %dlg_email_versturen_Create(WINDOW Parent, integer Ontvanger, string Onderwerp, string Bericht, WINDOW Editwin) - (i,i,i,i,i)
+  %dlg_email_versturen_Create(WINDOW Parent, integer Ontvanger, string Onderwerp, string Bericht, string EmailAdr, string Naam, WINDOW EditWin) - (i,i,i,i,i,i,i)
+  tb_agenda_Create(WINDOW Parent) - (i)
+  tb_planning_Create(WINDOW Parent) - (i)
+  tb_planbottom_Create(WINDOW Parent) - (i)
+  win_bezwarenwin_Create(WINDOW Parent, string TijdStr, string Text, integer Result, string Opmerkingen, string OpmTeVerplaatsen, string OpmAnderen) - (i, i, i, i, i, i, i)
+  win_tijdstipextra_Create(WINDOW Parent) - (i)
+  win_tijdstipextra_Update()
+  win_banentool_Create(WINDOW Parent) - (i)
+  dlg_baaninstellingen_Create(WINDOW Parent, integer BaanNr) - (i, i)
+  dlg_plaatsvoorstel_Create(WINDOW Parent, integer Volgorde) - (i,i)
+  tb_plandetails_Create(WINDOW Parent) - (i)
+%END_DECL
+determ  planningBezig()
+  banentool_ververs()
+  banentoolMove(integer RechterKant) - (i)
+%  toolbarOpnieuw(window Parent, integer Mode, toolbar_action_func) - (i, i, i) 
+zoekTeken(WINDOW, char, SList, integer, integer, zoekFunc) - (i, i, i, i, o, i)
+%plaatsen(integer) - (i)
+planOndSeq(WINDOW) - (i)	% plan een onderdeel sequentieel
+%procedure splitsTel(string, string, string) - (i, o, o)
+%dialer(WINDOW, string) - (i, i)
+%oproeplijst(WINDOW) - (i)	% maak oproeplijst aan
+nieuwPlan(janee, WINDOW,integer,wedscat) - (i,i,i,i)
+vervolgMelding(WINDOW, string Winnaars, janee Doorplannen, integer, wedscat, integer OE)  - (i,i,i,i,i,i)
+  determ koplUitgevoerd(wedscat, ipvdom,tgnst Nieuwe) - (i,i,o)
+  nondeterm own_member1(OD_ITEMSTATE,OD_STATE) - (i, i)
+  procedure save_UitslWin()
+  procedure save_WaarschWin()
+  handleLRGew(janee, janee, janee, janee, tgnst, tgnst, integer, wedscat, integer, tgnst) - (i,i,o,o,i,i,i,i,i,o)
+  haspisert(integer, integer) - (i, i)
+  %haspiserf(integer, integer) - (i, i)
+  nr2tekst(vandom, string) - (i, o)
+procedure extraSpatie(string, string, string) - (i, i, o)
+  stuurOproepBericht(integer Persoon, string Onderwerp, string Bericht) - (i, o, o)
+%procedure uitslagstatus(string Uitslag, uitslstat, boolean Gestaakt, boolean Walkover) - (i,o,o,o)
+procedure str_intP(string, integer) - (i,o) (o, i)
+  planMetAgenda()
+  planMetAgenda(integer No, wedscat Cat) - (i, i)
+  vorig_plan(integer, wedscat, janee, janee, integer OudeTijd) - (i, i, i, i, i)
+  afz(janee, integer, wedscat, tijd, tgnst, janee LogBlijfOpen) - (i, i, i, i, i, i)
+  afzU(janee WasAl, janee, integer, wedscat, tijd, tgnst, janee LogBlijfOpen) - (i, i, i, i, i, i, i)
+determ	   schort_op1(integer,wedscat,schl,schl) - (i, i, i, o)
+nondeterm  undoSchortOp(schl) - (i)
+nondeterm  split(sch,schl,schl,schl) - (i, i, o, o)
+	   qsort(schl,schl) - (i, o)
+determ  herplan(WINDOW, schl, janee LogBlijfOpen) - (i, i, i)
+%procedure loadkeuring(string Bestand, integer FullTime, boolean Verbose, boolean Onecht) - (i,i,i,i)
+%determ checkNaamCheck(string Naam, string Achternaam, string NrNieuw, sex Spelersoort, sexe Geslacht, string NaamNieuw, integer Verander, string NrOud, string Verenigingsnummer) - (i,i,i,i,i,o,o,i,i)
+procedure dubbelRating(real, real, string, string DeltaVoorDubbel, color RatingDeltaColor, integer LotingRating) - (i, i, o, o, o, o)
+procedure str_real_Rating(string, real) - (i, o)
+procedure formatrating(string, string) - (i, o)
+%procedure teamKeur(wedscat WC, tgnst Tgnst, keurdom Keur) - (i, i, o)
+determ baannaamP(integer BaanNr, boolean Beschikbaar, string ParkToekomst, string BaanNaam) - (i, o, o, o), (i,i,o,o), (i,i,i,o)
+procedure getMaxBanen(integer) - (o)
+procedure checkcompleet()
+procedure switchSpelerAanwezig(integer Sp, integer, wedscat) - (i,i,i)
+procedure te_informeren(integer) - (i)
+determ   personen(tgnst, integerlist, sexlist) - (i, o, o)
+nondeterm  passende_categorie(wedscat, string, integerlist, sexlist) - (i, o, i, i)
+procedure ranglijstGeldt(wedscat Cat, string Gebdat, string In, string Uit) - (i, i, i, o)
+procedure zetaanwezig(integer) - (i)
+procedure dlg_plaatsing_refresh() - ()
+procedure integer curlopgavecheck(integer CheckOfExport, string XML, string CheckedData, string Rapport) - (i, i, i, i) language c
+procedure string opmZuiver(string In) - (i)
+procedure updateWaarschuwVoorselectie(ilist) - (i)
+procedure verwijderPlanning(integer, wedscat, tijd, janee, janee, tgnst) - (i,i,o,o,o,i)
+determ  uitslag_volgExtern(integer, wedscat) - (i,i)
+procedure allemaalgewaarschuwd()
+procedure nognietgewaarschuwd()
+procedure getSpelerOproepen(integer Speler) - (i)
+determ lokaalOnderdeelProbleem(wedscat Cat) - (i)
+procedure noodRating(string Rating, string Speelsterkte, string Rating) - (i,i,o)
+  procedure keur2tekst(wedscat, ilist Tegenstanders, teamstatus,string Kort, string Tekst,color) - (i,i,i,o,o,o)
+procedure spelersblijven(integer, wedscat, boolean MetAanwReg) - (i,i,i)
+
+
+%determ rb2vehikel(integer, vehikel) - (i,o)
+%procedure setAlgemeel(vehikel, string, string)
+

@@ -1,0 +1,8 @@
+:Base TASVP1.HLP
+:Title Toernooiassistent
+1 Inhoud
+2 Inhoud=idh_Inhoud
+2 Toernooibeleid=idh_Toernooibeleid
+1 Open=idh_Open
+1 Print=idh_Print
+1 Toernooieigenschappen=idh_Toernooieigenschappen

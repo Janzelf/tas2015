@@ -1,0 +1,74 @@
+/*****************************************************************************
+
+		Copyright (c) 1989 - 1998 De Lint Associates
+
+ Project:  TASVPI
+ FileName: TASPRNT.PRE
+ Purpose: Predicate definitions for TASPRNT.PRO
+ Written by: JdL
+ Comments:
+******************************************************************************/
+
+%BEGIN_DECL, System generated global predicates
+GLOBAL PREDICATES
+  dlg_rapport_Create(WINDOW Parent, string Title, string Bewaar, BOOLEAN ReadOnly) - (i, i, i, i)
+%  dlg_afdruk_van_spelergegevens_Create(WINDOW Parent) - (i)
+  dlg_onderdeelspelergegevens_Create(WINDOW Parent) - (i)
+  dlg_attributen_spelerlijst_Create(WINDOW Parent, integerlist SpelerNummers, string Titel, integer Mode) - (i, i, i, i)
+  dlg_toernooiexportemail_Create(WINDOW Parent, mapifiledesc_list, string Titel, string Msg, slist Adressen, string ETitel, string PlainTekst, string Ontvanger) - (i,i,i,i,i,i,i,i)
+  %dlg_resultaatexport_Create(WINDOW Parent) - (i)
+%END_DECL
+
+procedure close_rapporten()
+determ einduitslagen(WINDOW Parent, integer Type) - (i,i)  % MOET determ zijn!
+einduitslagenXML()
+controleer(WINDOW Parent, integer Optie, string Naam) - (i, i, i)
+weds_uitsl() 
+plan_nieuws()
+onderdeelEtik(WINDOW, integer Optie) - (i,i) % Optie 5 = oproep Optie 7 = betaling
+onderdeelMM(WINDOW) - (i)
+ronde_tekst(integer, ronde_dom, string) - (i, i, o)
+  in_weds(wedscat, tgnst) - (i,i)
+%determ xml_partij(wedscat, tgnst, string In, string Uit) - (i, i, i, o)
+procedure xml_xlate(string Gewoon, string Compat) - (i, o) (o, i)
+procedure xml_naamscan(string Totaal, string AchternaamDeel, string, string) - (i, o, o, o)
+procedure xml_naamscanNoXlate(string, string, string, string) - (i, o, o, o)
+procedure xml_gegeven(string Keyword,string Value) - (i, i)  % nog voor spelerxml
+procedure xml_gegeven(string,string,string Default) - (i, i, i) % nog voor spelerxml
+procedure xml_voorvoegsel(string Voornaam, string Rest, string Key) - (i, o, i)
+procedure xml_onderdeelnaam(string, string) - (i, o)
+procedure xml_speelsterkte(wedscat, string, string, boolean) - (i, o, o, o)
+procedure xml_spelsoort(wedstyp, string, string) - (i, o, o)
+%procedure xml_geslacht(sexlist, string, string) - (i, o, o)
+  xml_leeftijd(wedscat, sexlist, string, string, string, boolean) - (i, i, o, o, o, o)
+%determ    xml_checkToernooi(string VNr, string Naam, string Nr, string NrUit) - (i,i,i,o)
+procedure telefono(slist, string) - (i, o)
+procedure formatOpm(string Opm, string WorkLine, string In, string Uit, string Margin, integer LL) - (i, i, i, o, i, i)
+procedure iniOptiesL(integer Mode, boolean, boolean, boolean, boolean, boolean, boolean, boolean,boolean, boolean, boolean, boolean,boolean) - (i,o,o,o,o,o,o,o,o,o,o,o,o)
+nondeterm selected_sp_in_cats(string Naam, integer SpNo) - (o, o)
+determ    rep_wed2(string Voorvoegsel, boolean AlleenVoorletters, integer, wedscat, string Plat, string Html) - (i, i, i, i, o, o) 
+procedure  gepland(integer, wedscat, janee, janee, char) - (i,i,o,o,o)
+determ uploadAlg1(string PHPScript, string Stap, slist FilesFullName, string Titel, boolean WasAlVerb, integer Delay, boolean Gebeurd, slist PostVars) - (i,i,i,i,i,i,o,i)
+nondeterm  gespeeld(catl, integer, integer, wedscat) - (i, i, o, o)
+determ   winnaar(tgnst T1 , tgnst T2, tgnst, tgnst, tgnst, integer, integer, integer, integer) - (i,i,i,o,o,i,i,o,o)
+determ   scan(string, string, string Delimiter) - (i,o,i)
+procedure emailBackUp(string Email, string BUNaam, janee Silent) - (i, i, i)
+%procedure integer curltoernooiresultaat(string XMLNaam, string Retour, string RetourXML) - (i, i, i) language c
+procedure parseMsg(string Tkst, slist, string Rest) - (i,o,o)
+%determ  xml_tgnst(tgnst, string Naam, boolean Nostats, wedscat, string Ranglijst1, string Ranglijst2) - (i, o, i, i, o, o)
+procedure xml_plaatsing(integer, string) - (i, o)
+procedure xml_rondes(wedscat, integer Diepte) - (i,i)
+procedure xml_sets(string UitslagS, string Uitslag) - (i,i)
+%procedure xml_sets(string UitslagS, string Uitslag, string XML) - (i,i,o)
+%determ xml_uitslag(integer No, wedscat Cat, tgnst, tgnst, string Uitslag, string Uituitslag, string Bijzonderheid) -
+%  (i,i,i,i,i,o,o)
+procedure bondsnummerHak(string, string) - (i,o)
+procedure trapmsg( string File)  - (i)
+determ toernooinummerselect(slist,string) - (i,o)
+determ isMasterCat(wedscat) - (i)  % de master van AR onderdelen
+determ topCatOrSchemasoort(wedscat CatNo) - (i)
+procedure xml_wedsex(wedsex, string, string ) - (i,o,o)
+
+
+
+

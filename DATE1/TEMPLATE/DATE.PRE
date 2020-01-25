@@ -1,0 +1,19 @@
+/******************************************************************************
+
+               Copyright (c) 1984 - 2000 Prolog Development Center A/S
+
+ FileName:	DATE.PRE
+ PURPOSE:	Predicate definitions for date module
+ Written by:	Alexander Butovsky
+ Version:	1.0
+ Build:		012.990119
+ Tested with:   Visual Prolog v.5.1 build 555a
+ Comments:	
+
+******************************************************************************/
+ifdef use_date
+ #Error: Date module was alredy included by Visual Prolog Application Expert
+enddef 
+
+% Replace DATE_DIR with actual path to DATE tool:
+include "DATE_DIR\\date.pre"

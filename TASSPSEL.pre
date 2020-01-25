@@ -1,0 +1,75 @@
+/*****************************************************************************
+
+		Copyright (c) 1989 - 1998 De Lint Associates
+
+ Project:  TASVPI
+ FileName: TASSPSEL.PRE
+ Purpose: Predicate definitions for TASSPSEL.PRO
+ Written by: JdL
+ Comments:
+******************************************************************************/
+
+%BEGIN_DECL, System generated global predicates
+GLOBAL PREDICATES
+  %dlg_spelerselect_Create(WINDOW Parent, SLIST Inlist, string Selectedspeler) - (i,i,o)
+  dlg_spelersselect_Create(WINDOW Parent, string Title, SLIST Inlist, SLIST SelectedSpelers) - (i,i,i,o)
+  dlg_spelergegevensuitvoer_Create(WINDOW Parent, catl Presel, selectieniveau) - (i,i,i)  % eigenlijk spelerselectie
+  %dlg_betalingen_Create(WINDOW Parent) - (i)
+  dlg_partnerselectie_Create(WINDOW Parent, string Titel, slist Partners, sexlist Voornieuw, string Selected) - (i, i, i, i, o)
+  tb_planningcentrale_Create(WINDOW Parent) - (i)
+  win_spelersel_Create(WINDOW Parent, integer Mode) - (i, i)	% Mode 0 = alle 1 = deelnemers
+  tb_spelerselect_Create(WINDOW Parent) - (i)
+  dlg_paswoord_Create(WINDOW Parent, integer Return) - (i, o)
+  tb_betalingen_Create(WINDOW Parent) - (i)
+  dlg_adresetiketten_Create(WINDOW Parent, boolean TrueIsPostcodeVolgorde) - (i, o)
+  dlg_speleruitvoer2_Create(WINDOW Parent, boolean Komma, boolean VAsteKolommen, boolean XML) - (i, o, o, o)
+  win_betalingen_Create(WINDOW Parent) - (i)
+%  dlg_toernooinummer_lenen_Create(string TNr, string TNrNw) - (i,o)
+%END_DECL
+%procedure update_speler(speler In, speler Uit, integer Answer, integer RealAnswer) - (i,i,i,o)
+procedure close_spelersel()
+spelerBetaal(WINDOW) - (i)
+determ resetbetalingen()
+%spelerZoekOp(WINDOW) - (i)
+dupl_lidno(WINDOW, integer Keuze) - (i, i) % 1 = dubbel, 2 = ontbrekend
+%niet_spelers(WINDOW, integer Keuze) - (i, i)	% 2 = verwijderen, 1 = doorbladeren
+blanko_spelers(WINDOW, integer Mode) - (i,i)	% 1 missende gegevens, 2 = formulier
+procedure str_intVanTot(string, integer,string, integer) - (i, o, i, o)
+procedure formulierVolgend(integer Persno, integer Index, BOOLEAN) - (o, o, o)
+procedure formulierVorig(integer Persno, integer Index, BOOLEAN) - (o, o, o)
+formulierSelect(integer Persno) - (i)
+nondeterm lijstPersoon(string) - (o)
+procedure lijstPersonenTitel(string) - (o)
+
+spelers_uit()
+clubs_uit(integer Formaat) - (i)
+nondeterm spelerVoorLijst(WINDOW, string Naam, integer Mode) - (i, o, i)	% Mode 0 = alle 1 = deelnemers
+procedure close_betaal()
+%procedure refreshSpelerLijst(integer Operation, string Naam) - (i, i) % 21 = bij 22 = gewist
+nondeterm  wed_opgest(integer,wedid) - (i, o)
+  versten(wl,wl,wl,slist) - (i, i, o, o)
+nondeterm  wedstr_member(wedid,wl) - (o, i)
+%  closeSpelerSelect()
+procedure spelerSelrefresh()
+mv2string(sexe, string) - (i, o)
+zoekOp(integer SKeus, string Naam) - (i, i)
+zoekOp1(integer SKeus, wedscat Cat) - (i, i)
+save_SpSelWin()
+procedure update_betalingen()
+determ  contributie(integer, real, string, catl) - (i, o, o, i) 
+%determ  contributieX(integer, real, string, catl) - (i, o, o, i) 
+determ    betalingBevestigen(janee, integer SpNo, string Naam, janee Huidig, string BondsNr) - (i,i,i,i,i)
+  changeBetaald1(string Naam, janee Huidig) - (i, i)
+determ gegevens_bijwerken(slist MV, janee Nrdialoog, boolean Verbose, janee VragenOmVerbinding) - (i, i, i, i)
+procedure  sp_out(BOOLEAN Komma, BOOLEAN Kol, BOOLEAN XML, slist Namen) - (i,i,i,i)
+procedure  init_recno()
+%determ sp_in_groep(integer SpNo, sex, string Club, string St, string Geb) - (i, i, i, i, i)
+determ nogIn(boolean) - (o)
+%overgeslagenRapport()
+procedure overgeslagen(slist Ids) - (o)
+procedure setSelCrit(slist Ond, integerlist Spelers) - (i,i)
+nondeterm sp_catX(integer,wedscat) - (i,o) % hoeft niet in schema te staan
+procedure orderedTgnst(tgnst, tgnst) - (i,o)
+nondeterm lboxList2SpNaam(slist LboxList, string Naam) - (i, O)
+procedure snoeien(slist Spelerlijst) - (i)
+
